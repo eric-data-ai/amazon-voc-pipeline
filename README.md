@@ -1,3 +1,5 @@
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 # Amazon VOC Pipeline
 
 A cloud-based Amazon Voice of Customer (VOC) analytics pipeline that transforms unstructured Amazon reviews into structured, business-oriented insights.
@@ -39,6 +41,8 @@ Classification results retain decision signals such as `Source`, `Score`, and `M
 
 Stores normalized Amazon review data produced by the ETL pipeline.
 
+Data is loaded incrementally using `WRITE_APPEND`, with `Review_Key` serving as the business key for the raw layer.
+
 ### NLP Layer
 
 ```text
@@ -64,7 +68,15 @@ dim_asinreview (*)
       │
       ▼
 dim_review (1)
+      │
+      ├── scene_bridge (*)
+      ├── friction_bridge (*)
+      ├── motivation_bridge (*)
+      ├── time_bridge (*)
+      └── location_bridge (*)
 ```
+
+The analytical model is a star schema centered on `dim_review`. Multi-valued NLP labels are resolved through bridge tables linked to `Review_ID`, enabling clean filtering, grouping, and drill-down in Power BI without creating Cartesian products.
 
 ---
 
@@ -113,7 +125,9 @@ Current model version:
 
 `nlp_v2.0_rule_v1`
 
-Reviews already successfully processed by the current model version are skipped. Changing the model version allows the pipeline to reprocess reviews while preserving processing history.
+Reviews already processed under the current model version are skipped, regardless of processing status. This means that both successfully and unsuccessfully processed reviews are treated as completed for the current model version.
+
+To reprocess reviews after fixing rules or data issues, update `MODEL_VERSION` to a new value. This preserves processing history while allowing a clean reprocessing pass.
 
 ---
 
