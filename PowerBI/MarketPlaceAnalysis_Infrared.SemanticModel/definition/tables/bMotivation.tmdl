@@ -1,0 +1,153 @@
+table bMotivation
+	lineageTag: cb4efbc3-9b2c-4c91-b22f-393b052bc28c
+
+	measure 'Motivation Votes' =
+			
+			CALCULATE(
+			    [All Votes],
+			    TREATAS(
+			        VALUES(bMotivation[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: 939ddcaf-be66-456a-9d70-04ad21af7b07
+
+	measure 'Motivation Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        VALUES(bMotivation[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: e4960353-16ee-479b-8c8e-8aa057d2d890
+
+	measure 'Motivation Rating StdDev' =
+			
+			CALCULATE(
+			    [All Rating StdDev],
+			    TREATAS(
+			        VALUES(bMotivation[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: 10243869-263c-47af-81a0-04e88178c6a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Motivation Avg Rating' =
+			
+			CALCULATE(
+			    [All Rating],
+			    TREATAS(
+			        VALUES(bMotivation[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: 7636a7b1-3beb-45d8-8905-3eebf91860d0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Motivation Rating CV' = DIVIDE([Motivation Rating StdDev], [Motivation Avg Rating])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: afc0e613-e329-42d0-b1b4-a38ccbb8b300
+
+	measure 'Motivation Vote per Review' = DIVIDE([Motivation Votes], [Motivation Reviews])
+		lineageTag: 3122118a-288a-4cec-87dc-f6ce3edd7894
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Motivation Reviews Time Location' =
+			
+			CALCULATE(
+			    [Motivation Reviews],
+			    TREATAS(
+			        INTERSECT(
+			            VALUES(bTime[Review_ID]),
+			            VALUES(bLocation[Review_ID])
+			        ),
+			        bMotivation[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: d54555aa-c124-4c90-98d0-1c409245900d
+
+	measure 'Motivation Coverage%' =
+			
+			DIVIDE(
+			    [Motivation Reviews],
+			    [All Reviews]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ecad1e5b-0c31-4640-b082-707f536fa361
+
+	column Review_ID
+		dataType: string
+		lineageTag: 5ca83f63-773e-4af4-8c0a-965bcaf36e6f
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Motivation_Sub
+		dataType: string
+		lineageTag: 57011c7e-646f-40f0-a032-95fbc7162a25
+		summarizeBy: none
+		sourceColumn: Motivation_Sub
+
+		annotation SummarizationSetBy = Automatic
+
+	column Motivation_Main
+		dataType: string
+		lineageTag: 6073e946-00b4-458d-b4fe-61bd2fce3c2d
+		summarizeBy: none
+		sourceColumn: Motivation_Main
+
+		annotation SummarizationSetBy = Automatic
+
+	column Motivation_Source
+		dataType: string
+		lineageTag: af0fcf74-8ba9-4681-83e4-e86ae3f5b551
+		summarizeBy: none
+		sourceColumn: Motivation_Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Motivation_Score
+		dataType: double
+		lineageTag: 1103b19b-778f-4d7d-86af-9a340966da0c
+		summarizeBy: sum
+		sourceColumn: Motivation_Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Motivation_Margin
+		dataType: double
+		lineageTag: d52198ed-2309-4c04-97cb-24bb53c5d16c
+		summarizeBy: sum
+		sourceColumn: Motivation_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition bMotivation = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    motivation_bridge_Table = voc_features_Schema{[Name="motivation_bridge",Kind="Table"]}[Data]
+				in
+				    motivation_bridge_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

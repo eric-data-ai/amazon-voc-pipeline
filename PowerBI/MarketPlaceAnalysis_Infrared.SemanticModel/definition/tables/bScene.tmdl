@@ -1,0 +1,54 @@
+table bScene
+	lineageTag: 658865d9-f06d-4693-95cf-e9922b902c75
+
+	measure 'Scene Votes' =
+			
+			CALCULATE(
+			    [All Votes],
+			    TREATAS(
+			        VALUES(bScene[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: ce59b8cc-dc47-495a-b2c7-3edf2348a64e
+
+	column Review_ID
+		dataType: string
+		lineageTag: 55325357-808b-4c8c-a00e-1b1604cd17f2
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub_Scene
+		dataType: string
+		lineageTag: 88b6fbd5-c95a-485e-b1d9-dac8f321e925
+		summarizeBy: none
+		sourceColumn: Sub_Scene
+
+		annotation SummarizationSetBy = Automatic
+
+	column Main_Scene
+		dataType: string
+		lineageTag: 7b6c48d5-db6b-4c90-8b22-82a52f95938d
+		summarizeBy: none
+		sourceColumn: Main_Scene
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bScene = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    scene_bridge_Table = voc_features_Schema{[Name="scene_bridge",Kind="Table"]}[Data]
+				in
+				    scene_bridge_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

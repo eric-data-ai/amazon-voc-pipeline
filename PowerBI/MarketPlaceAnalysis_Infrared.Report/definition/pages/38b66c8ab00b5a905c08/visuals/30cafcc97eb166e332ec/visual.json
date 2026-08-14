@@ -1,0 +1,355 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "30cafcc97eb166e332ec",
+  "position": {
+    "x": 174,
+    "y": 2990,
+    "z": 5000,
+    "height": 640,
+    "width": 1225,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "decompositionTreeVisual",
+    "query": {
+      "queryState": {
+        "Analyze": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Votes"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Votes",
+              "nativeQueryRef": "Motivation Votes"
+            }
+          ]
+        },
+        "ExplainBy": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Main"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Main",
+              "nativeQueryRef": "Motivation_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Sub"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Sub",
+              "nativeQueryRef": "Motivation_Sub",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "ASIN"
+                }
+              },
+              "queryRef": "AsinProduct.ASIN",
+              "nativeQueryRef": "ASIN",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "价格($)"
+                }
+              },
+              "queryRef": "AsinProduct.价格($)",
+              "nativeQueryRef": "价格($)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "bMotivation"
+                  }
+                },
+                "Property": "Motivation Votes"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "ExplainBy"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "bMotivation.Motivation_Main"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Main"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "bMotivation.Motivation_Sub"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Sub"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "AsinProduct.ASIN"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "ASIN"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "AsinProduct.价格($)"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'External Triggers'"
+                  }
+                }
+              ],
+              "isToggled": true,
+              "children": [
+                {
+                  "identityValues": [
+                    {
+                      "Literal": {
+                        "Value": "'Gift_Purchase'"
+                      }
+                    }
+                  ],
+                  "isToggled": true,
+                  "children": [
+                    {
+                      "identityValues": [
+                        {
+                          "Literal": {
+                            "Value": "'B09CLM44TM'"
+                          }
+                        }
+                      ],
+                      "isToggled": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "objects": {
+      "tree": [
+        {
+          "properties": {
+            "effectiveBarsPerLevel": {
+              "expr": {
+                "Literal": {
+                  "Value": "8L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "categoryLabelFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataLabels": [
+        {
+          "properties": {
+            "dataLabelUnderline": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "insights": [
+        {
+          "properties": {
+            "isAINode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "品牌"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'hooga'"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "价格区间"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'f.$250-300'"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "价格($)"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "299D"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "bc0e0102f5820aaebc0d",
+  "position": {
+    "x": 229,
+    "y": 286,
+    "z": 0,
+    "height": 373,
+    "width": 551,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Main_Scene"
+                }
+              },
+              "queryRef": "bScene.Main_Scene",
+              "nativeQueryRef": "Main_Scene",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Sub_Scene"
+                }
+              },
+              "queryRef": "bScene.Sub_Scene",
+              "nativeQueryRef": "Sub_Scene",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Scene Reviews"
+                }
+              },
+              "queryRef": "fReviews.Scene Reviews",
+              "nativeQueryRef": "Scene Reviews"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dReviews"
+                  }
+                },
+                "Property": "Scene Reviews"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'场景声量'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "84f08d0e8b0d44808d0d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Main_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "03d37b12270818920e84",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Sub_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5fc5121dc245c3d56307",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Scene Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

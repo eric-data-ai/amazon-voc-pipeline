@@ -1,0 +1,64 @@
+table AsinProduct
+	lineageTag: d89d6e7d-1b18-490c-90a5-0e654b554662
+
+	column ASIN
+		dataType: string
+		lineageTag: 5b099944-353a-4c0e-8850-e644cc4b9fb5
+		summarizeBy: none
+		sourceColumn: ASIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 品牌
+		dataType: string
+		lineageTag: 9aab4a78-0db9-42d2-bbc0-a179e565c1e3
+		summarizeBy: none
+		sourceColumn: 品牌
+
+		annotation SummarizationSetBy = Automatic
+
+	column 价格($)
+		dataType: double
+		lineageTag: 5994d174-b2a1-47f9-a357-060290b72ae3
+		summarizeBy: none
+		sourceColumn: 价格($)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 价格区间
+		dataType: string
+		lineageTag: e5b54431-b45c-4cfc-a97b-bd2ee3ebb3e0
+		summarizeBy: none
+		sourceColumn: 价格区间
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: 2c108275-bf88-4186-a0cc-791ce579f0c9
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AsinProduct = m
+		mode: import
+		source =
+				let
+				    Source = fData,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"ASIN", "品牌", "价格($)", "价格区间"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"ASIN"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Duplicates", {"ASIN"}, ModelMapping, {"ASIN"}, "ModelMapping", JoinKind.LeftOuter),
+				    #"Expanded ModelMapping" = Table.ExpandTableColumn(#"Merged Queries", "ModelMapping", {"Model"}, {"Model"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded ModelMapping", {"ASIN"}, bAsinReview, {"ASIN"}, "bAsinReview", JoinKind.RightOuter),
+				    #"Removed Columns" = Table.RemoveColumns(#"Merged Queries1",{"bAsinReview"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([ASIN] <> null))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

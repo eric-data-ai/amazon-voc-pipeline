@@ -28,6 +28,10 @@ credentials.json
 .cache/
 .pytest_cache/
 
+# Power BI PBIP
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
 # IDE
 .vscode/
 .idea/

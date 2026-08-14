@@ -1,0 +1,246 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "b6559d1b9598ea6b332b",
+  "position": {
+    "x": 199,
+    "y": 1130,
+    "z": 3000,
+    "height": 462,
+    "width": 1237,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Main"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Main",
+              "nativeQueryRef": "Motivation_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Sub"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Sub",
+              "nativeQueryRef": "Motivation_Sub",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Reviews"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Reviews",
+              "nativeQueryRef": "Motivation Reviews"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Votes"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Votes",
+              "nativeQueryRef": "Motivation Votes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Vote per Review"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Vote per Review",
+              "nativeQueryRef": "Motivation Vote per Review"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Avg Rating"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Avg Rating",
+              "nativeQueryRef": "Motivation Avg Rating"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Rating StdDev"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Rating StdDev",
+              "nativeQueryRef": "Motivation Rating StdDev"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Rating CV"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Rating CV",
+              "nativeQueryRef": "Motivation Rating CV"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "bMotivation"
+                  }
+                },
+                "Property": "Motivation Reviews"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "bMotivation.Motivation_Main"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Main"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "bMotivation.Motivation_Sub"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Beauty'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Health & Recovery'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

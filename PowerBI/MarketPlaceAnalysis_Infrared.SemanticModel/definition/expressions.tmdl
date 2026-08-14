@@ -1,0 +1,87 @@
+expression dCat =
+		let
+		    Source = Excel.Workbook(File.Contents("D:\Data\Amazon\Market Analysis\Data\Category.xlsx"), null, true),
+		    dCat_Table = Source{[Item="dCat",Kind="Table"]}[Data],
+		    #"Lowercased Text" = Table.TransformColumns(dCat_Table,{{"Term", Text.Lower, type text}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Lowercased Text",{{"Type", type text}, {"Priority", type text}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Term", Order.Ascending}, {"Priority", Order.Ascending}}),
+		    BufferedTable = Table.Buffer(#"Sorted Rows")
+		in
+		    BufferedTable
+	lineageTag: ab7ef4db-7221-4d31-a43a-3643460f3f93
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dParts =
+		let
+		    Source = Excel.Workbook(File.Contents("D:\Data\Amazon\Market Analysis\Data\Category.xlsx"), null, true),
+		    dParts_Table = Source{[Item="dParts",Kind="Table"]}[Data],
+		    #"Lowercased Text" = Table.TransformColumns(dParts_Table,{{"Term", Text.Lower, type text}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Lowercased Text",{{"Type", type text}, {"Priority", Int64.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Term", Order.Ascending}, {"Priority", Order.Ascending}}),
+		    BufferedTable = Table.Buffer(#"Sorted Rows")
+		in
+		    BufferedTable
+	lineageTag: f8ec373b-0ba7-4daf-a0b0-9cfaf18b069f
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dPattern =
+		let
+		    Source = Excel.Workbook(File.Contents("D:\Data\Amazon\Market Analysis\Data\Category.xlsx"), null, true),
+		    dPattern_Table = Source{[Item="dPattern",Kind="Table"]}[Data],
+		    #"Lowercased Text" = Table.TransformColumns(dPattern_Table,{{"Term", Text.Lower, type text}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Lowercased Text",{{"Product", type text}, {"Term", type text}, {"Type", type text}, {"Priority", Int64.Type}}),
+		    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Product", Order.Ascending}, {"Priority", Order.Ascending}}),
+		    BufferedTable = Table.Buffer(#"Sorted Rows")
+		in
+		    BufferedTable
+	lineageTag: 79041814-2b2f-4b78-88ce-3ca6afe3be21
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression fxMatchType = ```
+		(CurrentTitle as any, CurrentProduct as any, MappingTable as table, Unmatched as any) as any =>
+		let
+		    
+		    SafeTitle = Text.Trim(Text.From(CurrentTitle ?? "")), 
+		
+		    
+		    SafeProduct = Text.Trim(Text.From(CurrentProduct ?? "")),
+		    
+		    
+		    FilteredRows = Table.SelectRows(MappingTable, each 
+		        [Product] = SafeProduct and 
+		        Text.Contains(SafeTitle, [Term])
+		    ),
+		    
+		    Match = Table.First(FilteredRows),
+		    Result = if Match = null then Unmatched else Match[Type]
+		in
+		    Result
+		```
+	lineageTag: 5311a900-8d60-4c3f-a4e5-eae66ce86d05
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression ModelMapping =
+		let
+		    Source = Excel.Workbook(File.Contents("D:\Python Projects\MappingTbls\ModelMapping.xlsx"), null, true),
+		    ModelMapping_Table = Source{[Item="ModelMapping",Kind="Table"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(ModelMapping_Table,{{"ASIN", type text}, {"Model", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: ec16a0e5-272d-4d66-8e54-d976e4b7f359
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

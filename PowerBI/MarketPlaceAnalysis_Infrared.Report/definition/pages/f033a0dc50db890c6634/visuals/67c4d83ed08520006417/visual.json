@@ -1,0 +1,187 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "67c4d83ed08520006417",
+  "position": {
+    "x": 204,
+    "y": 697,
+    "z": 8000,
+    "height": 373,
+    "width": 554,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Main"
+                }
+              },
+              "queryRef": "bFriction.Friction_Main",
+              "nativeQueryRef": "Friction_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Sub"
+                }
+              },
+              "queryRef": "bFriction.Friction_Sub",
+              "nativeQueryRef": "Friction_Sub",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction Votes"
+                }
+              },
+              "queryRef": "bFriction.Friction Votes",
+              "nativeQueryRef": "Friction Votes"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "bFriction"
+                  }
+                },
+                "Property": "Friction Votes"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'摩擦共鸣'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6f1f626c99406d60d350",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "6315a063a1e766c650e7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4e6e640e1ecd34e1a577",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction Votes"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

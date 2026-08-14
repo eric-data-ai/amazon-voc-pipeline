@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "2a732e5072a63ebe4692",
+  "displayName": "Overview",
+  "displayOption": "ActualSize",
+  "height": 3600,
+  "width": 1500
+}

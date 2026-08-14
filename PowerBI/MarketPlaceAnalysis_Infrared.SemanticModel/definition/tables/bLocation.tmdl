@@ -1,0 +1,58 @@
+table bLocation
+	lineageTag: eeca3b19-6d96-4ece-be91-e81b93a136d7
+
+	measure 'Location Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        VALUES(bLocation[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: e168fb23-0d26-468b-8482-4596e83ec257
+
+	measure 'Location Friction%' =
+			
+			CALCULATE(
+			    DIVIDE([Friction Reviews], [Location Reviews]),
+			    TREATAS(
+			        VALUES(bLocation[Review_ID]),
+			        bFriction[Review_ID]
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a0aee4e1-cbb2-418f-9e82-66db64a82173
+
+	column Review_ID
+		dataType: string
+		lineageTag: dc2c5a75-e516-4646-9c8d-4e34d232df74
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 84be7b92-361c-454e-9eb1-d43b76934373
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bLocation = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    location_bridge_Table = voc_features_Schema{[Name="location_bridge",Kind="Table"]}[Data]
+				in
+				    location_bridge_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,34 @@
+table bTime
+	lineageTag: fc181ca6-aac4-4faa-936e-bea491f7efa9
+
+	column Review_ID
+		dataType: string
+		lineageTag: bcd58235-23df-436f-828c-11393015ac4a
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time_of_Day
+		dataType: string
+		lineageTag: 5774a6d3-36c9-45dd-8af5-bb977477f3ab
+		summarizeBy: none
+		sourceColumn: Time_of_Day
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bTime = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    time_bridge_Table = voc_features_Schema{[Name="time_bridge",Kind="Table"]}[Data]
+				in
+				    time_bridge_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

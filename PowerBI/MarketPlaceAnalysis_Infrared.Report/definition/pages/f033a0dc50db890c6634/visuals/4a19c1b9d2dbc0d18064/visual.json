@@ -1,0 +1,225 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "4a19c1b9d2dbc0d18064",
+  "position": {
+    "x": 875,
+    "y": 286,
+    "z": 1000,
+    "height": 761,
+    "width": 589,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "WordCloud1447959067750",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Keywords"
+                }
+              },
+              "queryRef": "fReviews.Keywords",
+              "nativeQueryRef": "Keywords"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction Reviews"
+                }
+              },
+              "queryRef": "bFriction.Friction Reviews",
+              "nativeQueryRef": "Friction Reviews"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "rotateText": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "minAngle": {
+              "expr": {
+                "Literal": {
+                  "Value": "-60D"
+                }
+              }
+            },
+            "maxAngle": {
+              "expr": {
+                "Literal": {
+                  "Value": "60D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stopWords": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "isDefaultStopWords": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "isPunctuationsCharacters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "maxNumberOfWords": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "performance": [
+        {
+          "properties": {
+            "preestimate": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'高频词统计'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "verticalSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "112cbd73a5ac6827b688",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Keywords"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2867dee8720ede800e42",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

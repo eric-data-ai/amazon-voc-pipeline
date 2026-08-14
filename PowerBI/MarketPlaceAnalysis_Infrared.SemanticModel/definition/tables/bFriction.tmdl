@@ -1,0 +1,197 @@
+table bFriction
+	lineageTag: e886a9cb-3961-43be-b7ec-7534dbaa807d
+
+	measure 'Friction Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        VALUES(bFriction[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: fcb74bc5-687d-46da-9b92-63247ed1380b
+
+	measure 'Friction Avg Rating' =
+			
+			CALCULATE(
+			    [All Rating],
+			    TREATAS(
+			        VALUES(bFriction[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: 143650ab-f5c4-4640-bab3-c46a844ddc8f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Friction Rating StdDev' =
+			
+			CALCULATE(
+			    [All Rating StdDev],
+			    TREATAS(
+			        VALUES(bFriction[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: 3928b3f2-e169-4d81-a38f-9e3cad9dbdc6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Friction Votes' =
+			
+			CALCULATE(
+			    [All Votes],
+			    TREATAS(
+			        VALUES(bFriction[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: 158e0eea-6a45-4e82-ab9e-b03cd4367407
+
+	measure 'Friction Rating CV' = DIVIDE([Friction Rating StdDev], [Friction Avg Rating])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4b90f8d3-ca9e-48fe-99be-318a12f5c03d
+
+	measure 'Friction Vote per Review' = DIVIDE([Friction Votes], [Friction Reviews])
+		lineageTag: d0027ca3-acf5-4ef4-8fd6-8ce2ca8a80e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Friction Reviews Time' =
+			
+			CALCULATE(
+			    [Friction Reviews],
+			    TREATAS(
+			        VALUES(bTime[Review_ID]),
+			        bFriction[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: bb683b18-c749-42f0-9b52-e5eee26f2ee9
+
+	measure 'Friction Coverage%' =
+			
+			DIVIDE(
+			    [Friction Reviews],
+			    [All Reviews]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 72d9d147-6f1a-41e4-91cb-ae27e5d7369c
+
+	measure 'Friction Rate%' =
+			
+			DIVIDE(
+			    [Friction Reviews],
+			    [All Reviews]
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 95905ba4-1a70-44e8-b3fe-c7a8d7c90fbd
+
+	measure 'Friction MoM%' = ```
+			
+			VAR CM = [Friction Rate%]
+			VAR PM =
+			    CALCULATE(
+			        [Friction Rate%],
+			        DATEADD(dDate[Date], -1, MONTH)
+			    )
+			VAR Result = 
+			    IF(
+			        NOT ISBLANK(CM),
+			        DIVIDE(CM - PM, PM)
+			    )
+			RETURN
+			    Result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e144e8be-7fe7-4b6f-a47a-fa513065a743
+
+	measure 'Friction YoY%' = ```
+			
+			VAR CY = [Friction Rate%]
+			VAR PY =
+			    CALCULATE(
+			        [Friction Rate%],
+			        DATEADD(dDate[Date], -1, YEAR)
+			    )
+			VAR Result = 
+			    IF(
+			        NOT ISBLANK(CY),
+			        DIVIDE(CY - PY, PY)
+			    )
+			RETURN
+			    Result
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bb31eae1-34c1-47b7-8637-1103b70dcd9d
+
+	column Review_ID
+		dataType: string
+		lineageTag: 020551e5-e713-49db-8455-3eba4a366c34
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friction_Sub
+		dataType: string
+		lineageTag: 69fc10df-b95c-44a3-b476-520b933339b0
+		summarizeBy: none
+		sourceColumn: Friction_Sub
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friction_Main
+		dataType: string
+		lineageTag: 514f934c-109f-4ff4-be43-621eae23b8d4
+		summarizeBy: none
+		sourceColumn: Friction_Main
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friction_Source
+		dataType: string
+		lineageTag: e6ba5ffb-342d-4c73-89d8-15ad85c421b9
+		summarizeBy: none
+		sourceColumn: Friction_Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friction_Score
+		dataType: double
+		lineageTag: 961c414a-6a71-41a8-bdf1-55923c54bb87
+		summarizeBy: sum
+		sourceColumn: Friction_Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Friction_Margin
+		dataType: double
+		lineageTag: 41d955d8-c326-438d-828d-4712801d3e40
+		summarizeBy: sum
+		sourceColumn: Friction_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition bFriction = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    friction_bridge_Table = voc_features_Schema{[Name="friction_bridge",Kind="Table"]}[Data]
+				in
+				    friction_bridge_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

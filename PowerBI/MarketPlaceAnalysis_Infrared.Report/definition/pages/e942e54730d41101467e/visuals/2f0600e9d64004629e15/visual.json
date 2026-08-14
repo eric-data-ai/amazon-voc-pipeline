@@ -1,0 +1,415 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2f0600e9d64004629e15",
+  "position": {
+    "x": 199,
+    "y": 2983,
+    "z": 4000,
+    "height": 640,
+    "width": 1225,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "decompositionTreeVisual",
+    "query": {
+      "queryState": {
+        "Analyze": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Scene Reviews"
+                }
+              },
+              "queryRef": "fReviews.Scene Reviews",
+              "nativeQueryRef": "Scene Reviews"
+            }
+          ]
+        },
+        "ExplainBy": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Main_Scene"
+                }
+              },
+              "queryRef": "bScene.Main_Scene",
+              "nativeQueryRef": "Main_Scene",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Sub_Scene"
+                }
+              },
+              "queryRef": "bScene.Sub_Scene",
+              "nativeQueryRef": "Sub_Scene",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "ASIN"
+                }
+              },
+              "queryRef": "AsinProduct.ASIN",
+              "nativeQueryRef": "ASIN",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "价格($)"
+                }
+              },
+              "queryRef": "AsinProduct.价格($)",
+              "nativeQueryRef": "价格($)",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dReviews"
+                  }
+                },
+                "Property": "Scene Reviews"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "ExplainBy"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "bScene.Main_Scene"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Main_Scene"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "bScene.Sub_Scene"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Sub_Scene"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "AsinProduct.ASIN"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "ASIN"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "AsinProduct.价格($)"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Wellness / Recovery'"
+                  }
+                }
+              ],
+              "isToggled": true,
+              "children": [
+                {
+                  "identityValues": [
+                    {
+                      "Literal": {
+                        "Value": "'chronic_pain'"
+                      }
+                    }
+                  ],
+                  "isToggled": true,
+                  "children": [
+                    {
+                      "identityValues": [
+                        {
+                          "Literal": {
+                            "Value": "'B09CLM44TM'"
+                          }
+                        }
+                      ],
+                      "isToggled": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "objects": {
+      "tree": [
+        {
+          "properties": {
+            "effectiveBarsPerLevel": {
+              "expr": {
+                "Literal": {
+                  "Value": "8L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "categoryLabelFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataLabels": [
+        {
+          "properties": {
+            "dataLabelUnderline": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "insights": [
+        {
+          "properties": {
+            "isAINode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "品牌"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'hooga'"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "价格区间"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'f.$250-300'"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Asin_Bridge"
+                          }
+                        },
+                        "Property": "价格($)"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "299D"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c9a192743a6140bb1e0c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Scene Reviews"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "376800f351e7130d5065",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Main_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eea3610be677e7a74cd7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Sub_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "77db4b61601e84525664",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "AsinProduct"
+              }
+            },
+            "Property": "ASIN"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

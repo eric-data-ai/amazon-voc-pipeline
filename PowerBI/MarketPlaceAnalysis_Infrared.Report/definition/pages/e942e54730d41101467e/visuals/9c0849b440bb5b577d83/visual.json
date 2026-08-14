@@ -1,0 +1,200 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "9c0849b440bb5b577d83",
+  "position": {
+    "x": 228,
+    "y": 693,
+    "z": 8000,
+    "height": 373,
+    "width": 554,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Main_Scene"
+                }
+              },
+              "queryRef": "bScene.Main_Scene",
+              "nativeQueryRef": "Main_Scene",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Sub_Scene"
+                }
+              },
+              "queryRef": "bScene.Sub_Scene",
+              "nativeQueryRef": "Sub_Scene",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Scene Votes"
+                }
+              },
+              "queryRef": "bScene.Scene Votes",
+              "nativeQueryRef": "Scene Votes"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "bScene"
+                  }
+                },
+                "Property": "Scene Votes"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'场景共鸣'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8808ccea20ee50182b1a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Main_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "78de8682d3cea04a126e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Sub_Scene"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "56725bc5d4c1cdc57d08",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bScene"
+              }
+            },
+            "Property": "Scene Votes"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

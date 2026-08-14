@@ -1,0 +1,38 @@
+relationship 2bd8c792-af57-4719-b3fd-5061514dc316
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fData.上架时间
+	toColumn: LocalDateTable_1f70c5fa-49cf-4936-9b89-4a0936cebed3.Date
+
+relationship AutoDetected_c69d7700-83d7-413f-b8c0-bd0f9aacaab4
+	crossFilteringBehavior: bothDirections
+	fromColumn: bAsinReview.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_d83dfe5f-9234-45c1-91db-8e1eae5dfcb2
+	fromColumn: bScene.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_a2097e2e-062b-4abb-ab0c-6ffa36352c61
+	fromColumn: bFriction.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_b61c8885-d9fc-4793-9b1b-9666f85d8b36
+	fromColumn: bMotivation.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_f4f4f746-e374-45e2-9aee-e27f1daeb480
+	fromColumn: bTime.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_3e99af0d-0e10-4ac4-b04e-d99fea10af4e
+	fromColumn: bLocation.Review_ID
+	toColumn: dReviews.Review_ID
+
+relationship AutoDetected_442aab92-95d5-4885-ab32-31813ce90647
+	fromColumn: bAsinReview.ASIN
+	toColumn: AsinProduct.ASIN
+
+relationship 26f3e255-8c64-a9ce-377f-d6555bfbb457
+	fromColumn: dReviews.Review_Date
+	toColumn: dDate.Date
+

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "23454c280cae26cdf3e4",
+  "position": {
+    "x": 194,
+    "y": 1662,
+    "z": 5000,
+    "height": 740,
+    "width": 1270,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "SankeyChart72F9467FDC1043888E57A6FA275C4DCE",
+    "query": {
+      "queryState": {
+        "category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Main_Scene"
+                }
+              },
+              "queryRef": "bScene.Main_Scene",
+              "nativeQueryRef": "Main_Scene"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Sub_Scene"
+                }
+              },
+              "queryRef": "bScene.Sub_Scene",
+              "nativeQueryRef": "Sub_Scene"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bLocation"
+                    }
+                  },
+                  "Property": "Location"
+                }
+              },
+              "queryRef": "bLocation.Location",
+              "nativeQueryRef": "Location"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bTime"
+                    }
+                  },
+                  "Property": "Time_of_Day"
+                }
+              },
+              "queryRef": "bTime.Time_of_Day",
+              "nativeQueryRef": "Time_of_Day"
+            }
+          ]
+        },
+        "measure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Scene Reviews Time Location"
+                }
+              },
+              "queryRef": "fReviews.Scene Reviews Time",
+              "nativeQueryRef": "Scene Reviews Time Location"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "config": [
+        {
+          "properties": {
+            "imageOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"enable\":true,\"selectedImageField\":\"\",\"imagesMappingByLevel\":[],\"byNodeLevel\":\"default\",\"placement\":\"inside\",\"horizontalAlignment\":\"middle\",\"verticalAlignment\":\"center\",\"autoSize\":true,\"isImgSettingsApplied\":false,\"size\":20}'"
+                }
+              }
+            },
+            "dataLabelsOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"showInsideLabels\":true,\"customLabelfieldValue\":\"\",\"insideLabelStyle\":\"category_dataValue\",\"insideAutoFontSizeMode\":true,\"showBoldParentNode\":false,\"insideFontSize\":10,\"insideFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"insideColorType\":\"FIXED\",\"insideColor\":\"rgba(255,255,255,1)\",\"insideBackgroundColor\":\"rgba(77,74,74,1)\",\"styling\":[],\"insideLabelTextShadow\":true,\"maxCharLimitEnabled\":false,\"wrapLabel\":false,\"maxCharLimit\":10,\"applyBackgroundFor\":\"allNode\",\"backgroundType\":\"shadow\",\"position\":\"outside\",\"valueType\":\"real\",\"horizontalAlignment\":\"middle\",\"verticalAlignment\":\"center\",\"headerTextShadow\":false,\"headerBackgroundColor\":\"rgba(3,139,139,1)\",\"showHeaderLabels\":true,\"headerPositionHorizontal\":\"top\",\"headerPositionVertical\":\"left\",\"headerFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"headerstyling\":[],\"headerFontSize\":10,\"headerColor\":\"rgba(0, 0, 0, 1)\",\"headermaxCharLimitEnabled\":true,\"headermaxCharLimit\":16,\"showLinkLabels\":false,\"linkLabelStyle\":\"value\",\"linkLabelAutoFontSize\":true,\"linkLabelFontSize\":10,\"linkLabelFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"linkLabelColor\":\"rgba(102,102,102,1)\",\"linkLabelStyling\":[]}'"
+                }
+              }
+            },
+            "nodePosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "''"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "legendPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TopLeft'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

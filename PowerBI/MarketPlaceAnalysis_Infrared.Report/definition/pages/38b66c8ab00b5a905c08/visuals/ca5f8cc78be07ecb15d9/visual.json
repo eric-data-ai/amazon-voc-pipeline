@@ -1,0 +1,225 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "ca5f8cc78be07ecb15d9",
+  "position": {
+    "x": 868,
+    "y": 294,
+    "z": 2000,
+    "height": 761,
+    "width": 589,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "WordCloud1447959067750",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Keywords"
+                }
+              },
+              "queryRef": "fReviews.Keywords",
+              "nativeQueryRef": "Keywords"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Reviews"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Reviews",
+              "nativeQueryRef": "Motivation Reviews"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "rotateText": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "minAngle": {
+              "expr": {
+                "Literal": {
+                  "Value": "-60D"
+                }
+              }
+            },
+            "maxAngle": {
+              "expr": {
+                "Literal": {
+                  "Value": "60D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stopWords": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "isDefaultStopWords": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "isPunctuationsCharacters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "maxNumberOfWords": {
+              "expr": {
+                "Literal": {
+                  "Value": "150D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "performance": [
+        {
+          "properties": {
+            "preestimate": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'高频词统计'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "verticalSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bc615f6e2731b30096ed",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Keywords"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "74a1bc500bcd779cd6d7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bMotivation"
+              }
+            },
+            "Property": "Motivation Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

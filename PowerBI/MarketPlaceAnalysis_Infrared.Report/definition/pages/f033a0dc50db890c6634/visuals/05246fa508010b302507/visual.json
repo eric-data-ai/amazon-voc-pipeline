@@ -1,0 +1,187 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "05246fa508010b302507",
+  "position": {
+    "x": 207,
+    "y": 286,
+    "z": 0,
+    "height": 373,
+    "width": 551,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Main"
+                }
+              },
+              "queryRef": "bFriction.Friction_Main",
+              "nativeQueryRef": "Friction_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Sub"
+                }
+              },
+              "queryRef": "bFriction.Friction_Sub",
+              "nativeQueryRef": "Friction_Sub",
+              "active": false
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction Reviews"
+                }
+              },
+              "queryRef": "bFriction.Friction Reviews",
+              "nativeQueryRef": "Friction Reviews"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "bFriction"
+                  }
+                },
+                "Property": "Friction Reviews"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'摩擦声量'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d0d02a98a79d04e80d65",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b062dc9aa0a8dc7576b0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "99aa977dc80d047e151a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

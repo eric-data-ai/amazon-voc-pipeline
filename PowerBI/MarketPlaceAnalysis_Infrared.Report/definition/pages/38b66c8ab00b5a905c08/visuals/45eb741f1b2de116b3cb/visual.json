@@ -1,0 +1,366 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "45eb741f1b2de116b3cb",
+  "position": {
+    "x": 194,
+    "y": 2474,
+    "z": 4000,
+    "height": 448,
+    "width": 1242,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "HeatMap67B54F74B5374B9EA95AC568DC37B14C",
+    "query": {
+      "queryState": {
+        "yAxis": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Main"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Main",
+              "nativeQueryRef": "Motivation_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation_Sub"
+                }
+              },
+              "queryRef": "bMotivation.Motivation_Sub",
+              "nativeQueryRef": "Motivation_Sub",
+              "active": false
+            }
+          ]
+        },
+        "xAxis": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Main"
+                }
+              },
+              "queryRef": "bFriction.Friction_Main",
+              "nativeQueryRef": "Friction_Main",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction_Sub"
+                }
+              },
+              "queryRef": "bFriction.Friction_Sub",
+              "nativeQueryRef": "Friction_Sub",
+              "active": false
+            }
+          ]
+        },
+        "Value": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dReviews"
+                    }
+                  },
+                  "Property": "Motivation Friction Reviews"
+                }
+              },
+              "queryRef": "fReviews.Motivation Friction Reviews",
+              "nativeQueryRef": "Motivation Friction Reviews"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dReviews"
+                  }
+                },
+                "Property": "Motivation Friction Reviews"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "visualSetting": [
+        {
+          "properties": {
+            "summaryTable": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "reverseLasso": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "lasso": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "advancedSettings": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "footer": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataLabelsConfig": [
+        {
+          "properties": {
+            "labelsConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"enable\":true,\"autoFitLabel\":false,\"displayStyle\":\"VALUE\",\"maxCharLimitEnabled\":false,\"maxCharLimit\":\"20\",\"transparency\":\"100\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"textColorType\":\"auto\",\"color\":\"rgba(255,255,255,1)\",\"shadowType\":\"rect\",\"autoFontSize\":true,\"fontSize\":\"10\",\"fontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"styling\":[],\"textShadow\":false,\"shadowColor\":\"rgba(205,204,204,1)\"}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "axisSettings": [
+        {
+          "properties": {
+            "axisConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"active\":\"XAXIS\",\"enableXAxis\":true,\"xPosition\":\"top\",\"xTitle\":false,\"customXLabel\":\"\",\"xTitleLabelFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"xTitleLabelFontSize\":16,\"xTitleStyling\":[],\"xTitleLabelColor\":\"#444444\",\"xTitleEnableBG\":false,\"xTitleLabelBGColor\":\"#C3C3C3\",\"xLabelFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"xLabelFontSize\":15,\"xStyling\":[],\"xLabelColor\":\"#444444\",\"xEnableBG\":false,\"xLabelBGColor\":\"#C3C3C3\",\"xLabelsCustomTextWidth\":false,\"xLabelsCustomTextWidthValue\":15,\"xTransparency\":100,\"autoXLabelTilt\":true,\"xTiltValue\":30,\"autoXLabelLimit\":false,\"xLabelLimitVal\":12,\"autoYLabelTilt\":true,\"yTiltValue\":30,\"autoYLabelLimit\":false,\"yLabelLimitVal\":18,\"autoXDateFormat\":true,\"autoYDateFormat\":true,\"xDateFormatVal\":\"dd:mm:yyyy\",\"yDateFormatVal\":\"dd:mm:yyyy\",\"customXDateFormat\":\"\",\"customYDateFormat\":\"\",\"enableYAxis\":true,\"yPosition\":\"left\",\"yTitle\":false,\"customYLabel\":\"\",\"yTitleLabelFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"yTitleLabelFontSize\":12,\"yTitleStyling\":[],\"yTitleEnableBG\":false,\"yTitleLabelColor\":\"#444444\",\"yTitleLabelBGColor\":\"#C3C3C3\",\"yLabelFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"yLabelFontSize\":15,\"yStyling\":[],\"yEnableBG\":false,\"yLabelColor\":\"#444444\",\"yLabelBGColor\":\"#C3C3C3\",\"yLabelsCustomTextWidth\":false,\"yLabelsCustomTextWidthValue\":15,\"yTransparency\":100}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "config": [
+        {
+          "properties": {
+            "customCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"isCustomRowCount\":false,\"isCustomColumnCount\":false,\"rowCount\":\"15\",\"colCount\":\"15\",\"addScrollBeyondMinSize\":true,\"scrollMinHeightThreshold\":\"30\",\"scrollMinWidthThreshold\":\"50\"}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "chartShapes": [
+        {
+          "properties": {
+            "shapeConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"shape\":\"FIT_TO_SIZE\",\"icon\":{\"prefix\":\"fas\",\"iconName\":\"circle\",\"icon\":[512,512,[],\"f111\",\"M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z\"],\"tabDetails\":{\"type\":\"faicon\",\"tabName\":\"__icons__\"}},\"showNullAs\":\"custom\",\"nullCustomVal\":\"0\",\"rowGap\":2,\"colGap\":2,\"roundedCorner\":\"sharp\",\"roundedCornerValue\":10,\"iconsDiverging\":[{\"threshold\":40.5,\"icon\":{\"prefix\":\"fas\",\"iconName\":\"square\",\"icon\":[448,512,[9632,9723,9724,61590],\"f0c8\",\"M0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96z\"],\"tabDetails\":{\"tabName\":\"__icons__\",\"type\":\"faicon\"}}},{\"threshold\":\"Infinity\",\"icon\":{\"prefix\":\"fas\",\"iconName\":\"circle\",\"icon\":[512,512,[],\"f111\",\"M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z\"],\"tabDetails\":{\"type\":\"faicon\",\"tabName\":\"__icons__\"}}}],\"fillShape\":true,\"border\":false,\"borderForNull\":true,\"borderColor\":\"rgb(74,74,74)\",\"borderWidth\":\"1\",\"sizeType\":\"auto\",\"customSizeMin\":\"35\",\"customSizeMax\":\"100\",\"lastRowMax\":true,\"showSeperatorLine\":false,\"seperatorLineType\":\"dashed\",\"seperatorLineWidth\":2,\"seperatorLineColor\":\"rgba(0,0,0,0.2)\",\"nullColor\":\"rgb(68,68,68)\",\"nullBGColor\":\"rgb(247,247,247)\",\"customSize\":false}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "numberFormatting": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataColors": [
+        {
+          "properties": {
+            "colorConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"fillmin\":\"rgb(253,98,94)\",\"midcolor\":false,\"fillmid\":\"rgb(3,194,129)\",\"fillmax\":\"rgb(92,113,187)\",\"fillnull\":\"rgb(246,245,245)\",\"fillType\":\"sequential\",\"dataClasses\":[],\"isReversed\":false,\"numberOfClasses\":5,\"schemeColors\":[\"rgb(251,194,190)\",\"rgb(233,159,155)\",\"rgb(215,124,120)\",\"rgb(197,89,85)\",\"rgb(179,53,49)\"],\"colorScheme\":\"Red\",\"reverse\":false,\"isGradient\":false,\"lastRowMax\":true,\"singleColor\":\"rgb(92,113,187)\",\"reversePowerBi\":false,\"powerBiClasses\":\"5\",\"colorBlindSafe\":false}'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5d26e36ea2c530742bb7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bMotivation"
+              }
+            },
+            "Property": "Motivation_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a31cbf3f310d0ee06dc2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bMotivation"
+              }
+            },
+            "Property": "Motivation_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f3753585e104a4a7086b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "96a293f7613d03976671",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d3b830e6b596e8dc0d34",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Motivation Friction Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

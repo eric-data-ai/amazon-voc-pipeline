@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["fData","dCat","dParts","dPattern","fxMatchType","dReviews","bAsinReview","bScene","bFriction","bMotivation","bTime","bLocation","ModelMapping","AsinProduct"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fData
+ref table DateTableTemplate_905e64e4-d5d1-4996-8318-67cd329feb02
+ref table LocalDateTable_1f70c5fa-49cf-4936-9b89-4a0936cebed3
+ref table dDate
+ref table dReviews
+ref table bAsinReview
+ref table bScene
+ref table bFriction
+ref table bMotivation
+ref table bTime
+ref table bLocation
+ref table AsinProduct
+
+ref cultureInfo en-US
+

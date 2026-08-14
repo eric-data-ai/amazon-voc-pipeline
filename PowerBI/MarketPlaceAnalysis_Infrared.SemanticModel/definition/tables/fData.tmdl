@@ -1,0 +1,977 @@
+table fData
+	lineageTag: 07891ae7-5137-4d0d-a6b8-f23ff35405fb
+
+	measure 月度销量 = ```
+			
+			VAR TblByAsin = 
+			    SUMMARIZE(
+			        fData,
+			        fData[品牌],
+			        fData[父ASIN],
+			        "MSales",
+			        MAX(fData[月销量])
+			    )
+			VAR Sales = 
+			    SUMX(
+			        TblByAsin,
+			        [MSales]
+			    )
+			RETURN
+			    Sales
+			```
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 9b3e62fe-1b32-44ea-a3b6-75c859cc5765
+
+	measure 月销售额 = ```
+			
+			VAR TblByAsin = 
+			    SUMMARIZE(
+			        fData,
+			        fData[品牌],
+			        fData[父ASIN],
+			        "MRev",
+			        MAX(fData[月销售额($)])
+			    )
+			VAR Sales = 
+			    SUMX(
+			        TblByAsin,
+			        [MRev]
+			    )
+			RETURN
+			    Sales
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Measures
+		lineageTag: c5832282-a9da-4957-80ff-4ea132c0196b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 品牌数 = DISTINCTCOUNT(fData[品牌])
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 36895da3-4b3a-49e4-b9d4-248d92df568b
+
+	measure 头部品牌销量占比 = ```
+			
+			-- 1. 计算当前切片器（如红外产品）下的总销量（分母）
+			VAR TotalMarketSales = [月度销量] 
+			
+			-- 2. 计算那 8 个头部品牌的销量总和（分子）
+			VAR TopBrandSales = 
+			    CALCULATE(
+			        [月度销量],
+			        FILTER(
+			            ALLSELECTED(fData[品牌]),
+			            [Is Top Brand Sales] = 1
+			        )
+			    )
+			
+			-- 3. 计算占比
+			RETURN 
+			    DIVIDE(TopBrandSales, TotalMarketSales)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: 66b57d58-6763-4eaf-ab20-257bf3bf681f
+
+	measure 销售额排名 =
+			
+			IF(
+			    HASONEVALUE(fData[品牌]),
+			    RANKX(ALLSELECTED(fData[品牌]), [月销售额])
+			)
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: f1aed0a2-8f63-4453-b40e-9a89e0fa10d8
+
+	measure 中位数价格 = MEDIAN(fData[价格($)])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Measures
+		lineageTag: 969ac7b2-b61c-4d46-a0c1-00d03e1d7abd
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure '% MoSales' =
+			
+			DIVIDE(
+			    [月度销量],
+			    CALCULATE(
+			        [月度销量],
+			        ALL(fData[品牌])
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: d68fff6d-c87d-42d4-bc49-d50753169add
+
+	measure '% MoRevenue' =
+			
+			DIVIDE(
+			    [月销售额],
+			    CALCULATE(
+			        [月销售额],
+			        ALL(fData[品牌])
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: d76dc34d-ffc8-46df-817d-81daa0fffbbf
+
+	measure 'Is Top Brand Sales' = ```
+			
+			-- 1. 无论在矩阵的哪一行，都先拿到当前切片器过滤后的完整品牌销量表
+			VAR VirtualBrandTable = 
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            VALUES(fData[品牌]),
+			            "@Sales", [月度销量]
+			        ),
+			        ALLSELECTED(fData[品牌])
+			    )
+			
+			-- 2. 统计总品牌数
+			VAR TotalBrands = COUNTROWS(VirtualBrandTable)
+			
+			-- 3. 获取当前行品牌的销量
+			VAR CurrentSales = [月度销量]
+			
+			-- 4. 计算当前品牌在虚拟表中的排名
+			VAR BrandRank = 
+			    IF(
+			        CurrentSales > 0,
+			        RANKX(VirtualBrandTable, [@Sales], CurrentSales, DESC, Dense)
+			    )
+			
+			RETURN
+			    IF(
+			        NOT ISBLANK(BrandRank) && (BrandRank <= 5 || DIVIDE(BrandRank, TotalBrands) <= 0.05),
+			        1, 0
+			    )
+			```
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: c0a72c47-d899-4f21-be9e-8a67cbbae972
+
+	measure 'Top Brand Count' =
+			
+			SUMX(
+			    VALUES(fData[品牌]),
+			    [Is Top Brand Sales]
+			)
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: f77ea184-0ac3-4f0a-92b8-e1ba42827352
+
+	measure 头部品牌销售额占比 = ```
+			
+			-- 1. 计算当前切片器（如红外产品）下的总销售额（分母）
+			VAR TotalMarketRev = [月销售额] 
+			
+			-- 2. 计算那 8 个头部品牌的销量总和（分子）
+			VAR TopBrandRev = 
+			    CALCULATE(
+			        [月销售额],
+			        FILTER(
+			            ALLSELECTED(fData[品牌]),
+			            [Is Top Brand Rev] = 1
+			        )
+			    )
+			
+			-- 3. 计算占比
+			RETURN 
+			    DIVIDE(TopBrandRev, TotalMarketRev)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: 75f55ac3-b2bb-46a0-a80b-fd3d448c37cf
+
+	measure 'Is Top Brand Rev' = ```
+			
+			-- 1. 构建虚拟表，抓取品牌对应的销售额
+			VAR VirtualBrandTable = 
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            VALUES(fData[品牌]),
+			            "@Rev", [月销售额]
+			        ),
+			        ALLSELECTED(fData[品牌])
+			    )
+			
+			-- 2. 统计总品牌数
+			VAR TotalBrands = COUNTROWS(VirtualBrandTable)
+			
+			-- 3. 获取当前行品牌的销售额
+			VAR CurrentRev = [月销售额]
+			
+			-- 4. 计算排名（注意：这里必须全部使用 Rev 相关的变量）
+			VAR BrandRank = 
+			    IF(
+			        CurrentRev > 0, -- 修正点 1: 检查销售额是否大于 0
+			        RANKX(VirtualBrandTable, [@Rev], CurrentRev, DESC, Dense) -- 修正点 2: 使用 CurrentRev 比较
+			    )
+			
+			RETURN
+			    IF(
+			        NOT ISBLANK(BrandRank) && (BrandRank <= 5 || DIVIDE(BrandRank, TotalBrands) <= 0.05),
+			        1, 0
+			    )
+			```
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 2f066672-0caa-443f-9b29-faebe3df5a91
+
+	measure 平均单价 = AVERAGE(fData[价格($)])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Measures
+		lineageTag: 41d9e69b-9fd8-4fa0-b6f1-1616b9496f90
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Brand Market Share' = ```
+			
+			DIVIDE(
+			    [月销售额], 
+			    CALCULATE([月销售额], ALLSELECTED('fData')) 
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: e29aa661-566d-4517-815c-fd380c0e16da
+
+	measure 价格段销售额占比 =
+			
+			VAR TotalRev = CALCULATE([月销售额], ALLSELECTED(fData))
+			RETURN DIVIDE([月销售额], TotalRev)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: 721cd7f5-631f-4a1c-811e-68493a726c59
+
+	measure 价格段销量占比 =
+			
+			VAR TotalQty = CALCULATE([月度销量], ALLSELECTED(fData))
+			RETURN DIVIDE([月度销量], TotalQty)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: 0101fa7b-7959-4aec-8d20-a09368bf0fb8
+
+	measure 平均品牌月营收 = DIVIDE([月销售额], [品牌数])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Measures
+		lineageTag: e1cf2c47-2e49-41d2-b648-bf93f4694c8f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Header Color' =
+			
+			VAR BrandRank = RANKX(ALLSELECTED(fData[品牌]), [月销售额], , DESC)
+			RETURN
+			IF(BrandRank <= 10, "#FF4500", "#118DFF")
+		displayFolder: Measures
+		lineageTag: f5de5f43-c57b-4258-94a8-5819a5b8f84d
+
+	measure 累计销售额 =
+			
+			VAR CurrentBrandTable = ALLSELECTED(fData[品牌]) -- 获取当前选中的所有品牌
+			RETURN
+			    SUMX(
+			        WINDOW(
+			            1, ABS,                -- 从排序后的第1行开始
+			            0, REL,                -- 累加到当前行
+			            CurrentBrandTable,      -- 数据范围
+			            ORDERBY([月销售额], DESC) -- 核心：按销售额从高到低排序
+			        ),
+			        [月销售额]
+			    )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Measures
+		lineageTag: a23c0e2a-7cc9-4779-acd2-41d06f13e5d2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 帕累托累计占比 =
+			
+			VAR TotalMarketRevenue = CALCULATE([月销售额], ALLSELECTED(fData))
+			RETURN
+			    DIVIDE([累计销售额], TotalMarketRevenue)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Measures
+		lineageTag: 1b1dbc89-b46e-4e37-8017-7e8ddf29a209
+
+	measure 平均评分 = AVERAGE(fData[评分])
+		displayFolder: Measures
+		lineageTag: f48294ed-012c-43cc-ade0-40cb88e5eac2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 中位数评分 = MEDIAN(fData[评分])
+		displayFolder: Measures
+		lineageTag: 8148e5da-bbcc-4a43-a838-e2f79bc348fe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 上架时间M = ```
+			
+			VAR TblByAsin = 
+			    FILTER(
+			        SUMMARIZE(
+			            fData,
+			            fData[品牌],
+			            fData[父ASIN],
+			            "ListingDate", MIN(fData[上架时间])
+			        ),
+			        NOT ISBLANK([ListingDate]) && [ListingDate] > DATE(2000,1,1) // 排除空值和可能的异常脏数据
+			    )
+			VAR MedianDateNum = 
+			    MEDIANX(
+			        TblByAsin,
+			        INT([ListingDate]) 
+			    )
+			RETURN
+			    CONVERT(MedianDateNum, DATETIME)
+			```
+		formatString: mm/dd/yyyy
+		displayFolder: Measures
+		lineageTag: e1d82f46-5527-4e55-9a31-5361102faa2b
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	measure 上架天数M = ```
+			
+			VAR TblByAsin = 
+			    CALCULATETABLE(
+			        SUMMARIZE(
+			            fData,
+			            fData[品牌],
+			            fData[父ASIN],
+			            "MaxDaysPerAsin", ROUNDUP(MAX(fData[上架天数]), 0)
+			        ),
+			        -- 强制忽略外部对 IsInfrared 和 Product 的特定筛选，确保读取该品牌所有 ASIN
+			        ALL(fData[IsInfrared], fData[Product]),
+			        NOT ISBLANK(fData[上架天数])
+			    )
+			RETURN
+			    MEDIANX(
+			        TblByAsin,
+			        [MaxDaysPerAsin]
+			    )
+			```
+		displayFolder: Measures
+		lineageTag: d7311ac9-5709-4957-a633-5d0551ae30d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 评论数 = ```
+			
+			VAR TblByAsin = 
+			    SUMMARIZE(
+			        fData,
+			        fData[品牌],
+			        fData[父ASIN],
+			        "ReviewCount",
+			        MAX(fData[评分数])
+			    )
+			VAR TotalReviews = 
+			    SUMX(
+			        TblByAsin,
+			        [ReviewCount]
+			    )
+			RETURN
+			    TotalReviews
+			```
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: afee3438-b439-443b-a0e0-bf8908951bc9
+
+	measure 'Bar Color' =
+			
+			VAR RankPart =
+			    RANKX(
+			        ALLSELECTED(fData[Parts]),
+			        [月销售额],
+			        ,
+			        DESC
+			    )
+			
+			VAR RankBrand =
+			    RANKX(
+			        ALLSELECTED(fData[品牌]),
+			        [月销售额],
+			        ,
+			        DESC
+			    )
+			
+			RETURN
+			IF(
+			    ISINSCOPE(fData[品牌]),
+			    IF(RankBrand <= 3,"#B85C38","#D8D0C8"),
+			    IF(RankPart <= 3,"#B85C38","#D8D0C8")
+			)
+		displayFolder: Measures
+		lineageTag: 20a1d9f0-c4f5-4be4-93c5-a148adc95f7b
+
+	column ASIN
+		dataType: string
+		lineageTag: 552e6bd7-66db-44f0-886c-c411d8a3ff25
+		summarizeBy: none
+		sourceColumn: ASIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 品牌
+		dataType: string
+		lineageTag: aa0edc2f-8739-450e-a78c-b565d4496981
+		summarizeBy: none
+		sourceColumn: 品牌
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品标题
+		dataType: string
+		lineageTag: 206b2302-a7c0-4f4f-87a4-ae2ecfb325ec
+		summarizeBy: none
+		sourceColumn: 商品标题
+
+		annotation SummarizationSetBy = Automatic
+
+	column 父ASIN
+		dataType: string
+		lineageTag: 8a67ca4a-fb5a-4362-b95a-f11242eaf41f
+		summarizeBy: none
+		sourceColumn: 父ASIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 类目路径
+		dataType: string
+		lineageTag: e57bab5b-b36e-4fab-acb1-f911e9b09d3c
+		summarizeBy: none
+		sourceColumn: 类目路径
+
+		annotation SummarizationSetBy = Automatic
+
+	column 大类目
+		dataType: string
+		lineageTag: b29f3c65-54b3-43e9-92b8-815195cd6883
+		summarizeBy: none
+		sourceColumn: 大类目
+
+		annotation SummarizationSetBy = Automatic
+
+	column 大类BSR
+		dataType: int64
+		formatString: 0
+		lineageTag: 87b4fc48-e8dc-4df1-88b9-c5c07c6ae252
+		summarizeBy: sum
+		sourceColumn: 大类BSR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 大类BSR增长数
+		dataType: int64
+		formatString: 0
+		lineageTag: 886817e5-b558-47a0-afdd-02690b36e53d
+		summarizeBy: sum
+		sourceColumn: 大类BSR增长数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 大类BSR增长率
+		dataType: double
+		lineageTag: cbb67a1e-5f5e-49a6-be62-58f520c0b7a7
+		summarizeBy: sum
+		sourceColumn: 大类BSR增长率
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 小类目
+		dataType: string
+		lineageTag: 84325bec-3962-4fb3-afa8-e7f290a9c219
+		summarizeBy: none
+		sourceColumn: 小类目
+
+		annotation SummarizationSetBy = Automatic
+
+	column 小类BSR
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ca28f58-62dc-473f-ac27-249ab40d533b
+		summarizeBy: sum
+		sourceColumn: 小类BSR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 月销量
+		dataType: int64
+		formatString: 0
+		lineageTag: c2fe7042-0b9c-4178-97ac-5d3857cda12a
+		summarizeBy: sum
+		sourceColumn: 月销量
+
+		annotation SummarizationSetBy = Automatic
+
+	column 月销量增长率
+		dataType: double
+		lineageTag: 4966a3c6-a0f6-46ef-b944-ad32248834f3
+		summarizeBy: sum
+		sourceColumn: 月销量增长率
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 月销售额($)
+		dataType: int64
+		lineageTag: 27b56b0a-ded0-4dd5-8802-92fa758a8dbd
+		summarizeBy: sum
+		sourceColumn: 月销售额($)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 子体销量
+		dataType: int64
+		formatString: 0
+		lineageTag: 73781e71-03e7-42a0-89a9-c59af940a763
+		summarizeBy: sum
+		sourceColumn: 子体销量
+
+		annotation SummarizationSetBy = Automatic
+
+	column 子体销售额($)
+		dataType: double
+		lineageTag: bec92554-393f-43f1-850a-0f11eb463100
+		summarizeBy: sum
+		sourceColumn: 子体销售额($)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 变体数
+		dataType: int64
+		formatString: 0
+		lineageTag: 72be812a-7aae-4d2b-9e3e-bbceaa2d6c82
+		summarizeBy: sum
+		sourceColumn: 变体数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 价格($)
+		dataType: double
+		lineageTag: 12bb8318-8d35-4869-bc67-ec412ef454fb
+		summarizeBy: sum
+		sourceColumn: 价格($)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Q&A数
+		dataType: int64
+		formatString: 0
+		lineageTag: 91800d50-534e-4eb2-b525-25559e32ee86
+		summarizeBy: sum
+		sourceColumn: Q&A数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 评分数
+		dataType: int64
+		formatString: 0
+		lineageTag: b0b61b84-aea4-4e3f-8ad6-ef130e41442c
+		summarizeBy: sum
+		sourceColumn: 评分数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 月新增评分数
+		dataType: int64
+		formatString: 0
+		lineageTag: f01e9bc7-82ad-4932-9622-5a267324345d
+		summarizeBy: sum
+		sourceColumn: 月新增评分数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 评分
+		dataType: double
+		lineageTag: 5070483b-34f1-448c-a4f4-fdeea800b9e2
+		summarizeBy: sum
+		sourceColumn: 评分
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 留评率
+		dataType: double
+		lineageTag: 7c61b120-3af4-4e36-8b4b-70d4015bbfa9
+		summarizeBy: sum
+		sourceColumn: 留评率
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FBA($)
+		dataType: double
+		lineageTag: 49f9e929-c071-43b6-818f-c54628993d7e
+		summarizeBy: sum
+		sourceColumn: FBA($)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 毛利率
+		dataType: double
+		lineageTag: d1ecefb9-2aea-48ef-858e-21513a5e7cc4
+		summarizeBy: sum
+		sourceColumn: 毛利率
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 上架时间
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a2e7ef70-c15f-4b4f-a460-bd6a698bab47
+		summarizeBy: none
+		sourceColumn: 上架时间
+
+		variation Variation
+			isDefault
+			relationship: 2bd8c792-af57-4719-b3fd-5061514dc316
+			defaultHierarchy: LocalDateTable_1f70c5fa-49cf-4936-9b89-4a0936cebed3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 上架天数
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d3f3f48-8a28-4cd3-8098-1ae304cf323e
+		summarizeBy: sum
+		sourceColumn: 上架天数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 配送方式
+		dataType: string
+		lineageTag: ef85cac7-89ad-4137-98ba-67fc7a0d56ca
+		summarizeBy: none
+		sourceColumn: 配送方式
+
+		annotation SummarizationSetBy = Automatic
+
+	column 买家运费($)
+		dataType: double
+		formatString: 0
+		lineageTag: 356ab3be-a4f1-4f9c-a4da-b17f2b3b5e20
+		summarizeBy: sum
+		sourceColumn: 买家运费($)
+
+		annotation SummarizationSetBy = Automatic
+
+	column LQS
+		dataType: double
+		lineageTag: 7c2ea7a3-4ff1-4e08-ad84-2ac7af11e691
+		summarizeBy: sum
+		sourceColumn: LQS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 卖家数
+		dataType: int64
+		formatString: 0
+		lineageTag: 444725f7-731a-4307-bfbb-d9046141d40b
+		summarizeBy: sum
+		sourceColumn: 卖家数
+
+		annotation SummarizationSetBy = Automatic
+
+	column 卖家所属地
+		dataType: string
+		lineageTag: 75967705-0e35-42e3-b713-71a8ab3bafac
+		summarizeBy: none
+		sourceColumn: 卖家所属地
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Best Seller标识'
+		dataType: string
+		lineageTag: 655bf9d0-8b00-4589-9798-0caaf4c2851d
+		summarizeBy: none
+		sourceColumn: Best Seller标识
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Amazon''s Choice'
+		dataType: string
+		lineageTag: af9e7a26-a7a5-49e2-9565-6101a8791803
+		summarizeBy: none
+		sourceColumn: Amazon's Choice
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPF绿标
+		dataType: string
+		lineageTag: bdb30044-a97e-417a-8ead-0d9bc5d29cec
+		summarizeBy: none
+		sourceColumn: CPF绿标
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPF绿标信息
+		dataType: string
+		lineageTag: 5968bb5f-4729-49a7-a596-1f8d2f24b163
+		summarizeBy: none
+		sourceColumn: CPF绿标信息
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'New Release标识'
+		dataType: string
+		lineageTag: dd6c2137-6930-43dd-b499-8ca2f02be61c
+		summarizeBy: none
+		sourceColumn: New Release标识
+
+		annotation SummarizationSetBy = Automatic
+
+	column A+页面
+		dataType: string
+		lineageTag: d5cf1df6-b88a-4eca-a82c-5b37c5fa6a81
+		summarizeBy: none
+		sourceColumn: A+页面
+
+		annotation SummarizationSetBy = Automatic
+
+	column 视频介绍
+		dataType: string
+		lineageTag: 61213de4-0e8f-4fe8-b721-88d42192121a
+		summarizeBy: none
+		sourceColumn: 视频介绍
+
+		annotation SummarizationSetBy = Automatic
+
+	column SP广告
+		dataType: string
+		lineageTag: b73a771b-d8c6-4099-8104-c435719d790c
+		summarizeBy: none
+		sourceColumn: SP广告
+
+		annotation SummarizationSetBy = Automatic
+
+	column 品牌故事
+		dataType: string
+		lineageTag: cfc0a32c-c705-4815-b29e-24d694120874
+		summarizeBy: none
+		sourceColumn: 品牌故事
+
+		annotation SummarizationSetBy = Automatic
+
+	column 品牌广告
+		dataType: string
+		lineageTag: 5c30bffa-1646-466c-874c-1bef414655ac
+		summarizeBy: none
+		sourceColumn: 品牌广告
+
+		annotation SummarizationSetBy = Automatic
+
+	column 7天促销
+		dataType: string
+		lineageTag: 1af4f08c-e15b-43b8-a39e-09304faa65b7
+		summarizeBy: none
+		sourceColumn: 7天促销
+
+		annotation SummarizationSetBy = Automatic
+
+	column AC关键词
+		dataType: string
+		lineageTag: 457e19a7-85dc-4a43-99ca-75bebcdcc4a2
+		summarizeBy: none
+		sourceColumn: AC关键词
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品重量
+		dataType: string
+		lineageTag: ff86d17c-c141-4373-81e6-63babf6a5de1
+		summarizeBy: none
+		sourceColumn: 商品重量
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品重量（单位换算）
+		dataType: string
+		lineageTag: d29cbd85-c905-4af4-a646-5e757d073051
+		summarizeBy: none
+		sourceColumn: 商品重量（单位换算）
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品尺寸
+		dataType: string
+		lineageTag: e71b2d5a-18b8-40f9-aeca-af020ffda24e
+		summarizeBy: none
+		sourceColumn: 商品尺寸
+
+		annotation SummarizationSetBy = Automatic
+
+	column 商品尺寸（单位换算）
+		dataType: string
+		lineageTag: d38ad0d3-fa71-467d-9693-183c47f8db23
+		summarizeBy: none
+		sourceColumn: 商品尺寸（单位换算）
+
+		annotation SummarizationSetBy = Automatic
+
+	column 包装重量
+		dataType: string
+		lineageTag: b615d80b-f942-4d55-8416-6426f5968473
+		summarizeBy: none
+		sourceColumn: 包装重量
+
+		annotation SummarizationSetBy = Automatic
+
+	column 包装重量（单位换算）
+		dataType: string
+		lineageTag: b0dfb800-3224-41d4-9c7e-7aeffaa8677a
+		summarizeBy: none
+		sourceColumn: 包装重量（单位换算）
+
+		annotation SummarizationSetBy = Automatic
+
+	column 包装尺寸
+		dataType: string
+		lineageTag: df034fba-bc9a-461a-b63f-dbc4b6d12acb
+		summarizeBy: none
+		sourceColumn: 包装尺寸
+
+		annotation SummarizationSetBy = Automatic
+
+	column 包装尺寸（单位换算）
+		dataType: string
+		lineageTag: cbad52d2-1237-474e-8b69-97397cec132b
+		summarizeBy: none
+		sourceColumn: 包装尺寸（单位换算）
+
+		annotation SummarizationSetBy = Automatic
+
+	column 包装尺寸分段
+		dataType: string
+		lineageTag: bd4922f0-461c-482f-8b86-01d5095537cb
+		summarizeBy: none
+		sourceColumn: 包装尺寸分段
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: df98faef-ca0e-4333-8a4b-a505dc52dbb1
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsInfrared
+		dataType: string
+		lineageTag: 8265a5d8-6989-4c22-ba0a-45736cf4ba83
+		summarizeBy: none
+		sourceColumn: IsInfrared
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cat
+		dataType: string
+		lineageTag: 7d722ca1-d88f-4687-94fe-3c6ff6797c48
+		summarizeBy: none
+		sourceColumn: Cat
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parts
+		dataType: string
+		lineageTag: 67bf6677-ae7c-40e9-8ece-fc2de22b5309
+		summarizeBy: none
+		sourceColumn: Parts
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pattern
+		dataType: string
+		lineageTag: 18c8f24d-8547-4301-a230-7ef2d8041470
+		summarizeBy: none
+		sourceColumn: Pattern
+
+		annotation SummarizationSetBy = Automatic
+
+	column 价格区间
+		dataType: string
+		lineageTag: 6a50d255-2d98-4548-87d3-57728a1201db
+		summarizeBy: none
+		sourceColumn: 价格区间
+
+		annotation SummarizationSetBy = Automatic
+
+	column 产品卖点
+		dataType: string
+		lineageTag: e0848ebb-2d29-4f09-8f59-51d384528f2b
+		summarizeBy: none
+		sourceColumn: 产品卖点
+
+		annotation SummarizationSetBy = Automatic
+
+	column TitleBullets
+		dataType: string
+		lineageTag: 40dc2ec6-b69c-436c-808c-039d31aeae68
+		summarizeBy: none
+		sourceColumn: TitleBullets
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fData = m
+		mode: import
+		source = ```
+				let
+				    Source = Folder.Files("D:\Data\Amazon\Market Analysis\Data\Sources\SalesData"),
+				    #"Lowercased Text" = Table.TransformColumns(Source,{{"Extension", Text.Lower, type text}}),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Lowercased Text", "Product", each Text.BetweenDelimiters([Name], "(", ")"), type text),
+				    #"Added Custom" = Table.AddColumn(#"Inserted Text Between Delimiters", "GetData", each Table.PromoteHeaders(Excel.Workbook([Content], null, true){[Item="US",Kind="Sheet"]}[Data], [PromoteAllScalars=true])),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Custom",{"Product", "GetData"}),
+				    #"Expanded GetData" = Table.ExpandTableColumn(#"Removed Other Columns", "GetData", {"ASIN", "品牌", "商品标题", "产品卖点", "父ASIN", "类目路径", "大类目", "大类BSR", "大类BSR增长数", "大类BSR增长率", "小类目", "小类BSR", "月销量", "月销量增长率", "月销售额($)", "子体销量", "子体销售额($)", "变体数", "价格($)", "Q&A数", "评分数", "月新增评分数", "评分", "留评率", "FBA($)", "毛利率", "上架时间", "上架天数", "配送方式", "买家运费($)", "LQS", "卖家数", "卖家所属地", "Best Seller标识", "Amazon's Choice", "CPF绿标", "CPF绿标信息", "New Release标识", "A+页面", "视频介绍", "SP广告", "品牌故事", "品牌广告", "7天促销", "AC关键词", "商品重量", "商品重量（单位换算）", "商品尺寸", "商品尺寸（单位换算）", "包装重量", "包装重量（单位换算）", "包装尺寸", "包装尺寸（单位换算）", "包装尺寸分段"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded GetData",{{"Product", type text}, {"ASIN", type text}, {"品牌", type text}, {"商品标题", type text}, {"产品卖点", type text}, {"父ASIN", type text}, {"类目路径", type text}, {"大类目", type text}, {"大类BSR", Int64.Type}, {"大类BSR增长数", Int64.Type}, {"大类BSR增长率", Percentage.Type}, {"小类目", type text}, {"小类BSR", Int64.Type}, {"月销量", Int64.Type}, {"月销量增长率", Percentage.Type}, {"月销售额($)", Int64.Type}, {"子体销量", Int64.Type}, {"子体销售额($)", type number}, {"变体数", Int64.Type}, {"价格($)", type number}, {"Q&A数", Int64.Type}, {"评分数", Int64.Type}, {"月新增评分数", Int64.Type}, {"评分", type number}, {"留评率", Percentage.Type}, {"FBA($)", type number}, {"毛利率", Percentage.Type}, {"上架时间", type date}, {"上架天数", Int64.Type}, {"配送方式", type text}, {"买家运费($)", type number}, {"LQS", type number}, {"卖家数", Int64.Type}, {"卖家所属地", type text}, {"Best Seller标识", type text}, {"Amazon's Choice", type text}, {"CPF绿标", type text}, {"CPF绿标信息", type text}, {"New Release标识", type text}, {"A+页面", type text}, {"视频介绍", type text}, {"SP广告", type text}, {"品牌故事", type text}, {"品牌广告", type text}, {"7天促销", type text}, {"商品重量", type text}, {"商品重量（单位换算）", type text}, {"商品尺寸", type text}, {"商品尺寸（单位换算）", type text}, {"包装重量", type text}, {"包装重量（单位换算）", type text}, {"包装尺寸", type text}, {"包装尺寸（单位换算）", type text}, {"包装尺寸分段", type text}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Changed Type", "TitleBullets", each Text.Combine({[商品标题], [产品卖点]}, ";"), type text),
+				    #"Filtered Rows" = Table.SelectRows(#"Inserted Merged Column", each ([月销量] <> null)),
+				    #"Replaced Errors" = Table.ReplaceErrorValues(#"Filtered Rows", {{"小类BSR", null}}),
+				    #"Lowercased Text1" = Table.TransformColumns(#"Replaced Errors",{{"商品标题", Text.Lower, type text}, {"TitleBullets", Text.Lower, type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Lowercased Text1", "IsInfrared", each if Text.Contains([TitleBullets], "far infrared") or Text.Contains([TitleBullets], "far-infrared") then "FIR" else if Text.Contains([TitleBullets], "red light") or Text.Contains([TitleBullets], "red-light") then "RLT" else if Text.Contains([TitleBullets], "infrared") then "Infrared_Only" else "Other", type text),
+				    #"Added Custom1" = Table.AddColumn(#"Added Conditional Column", "Cat", each fxMatchType([商品标题], [Product], dCat, "人类"), type text),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "Parts", each if [Product] = "Cervical" then "肩颈部" else fxMatchType([商品标题], [Product], dParts, "全身"), type text),
+				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "Pattern", each fxMatchType([商品标题], [Product], dPattern, "其它"), type text),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Added Custom3", "价格区间", each 
+				    if [#"价格($)"] < 50 then "a.$50以下" 
+				    else if [#"价格($)"] < 100 then "b.$50-100" 
+				    else if [#"价格($)"] < 150 then "c.$100-150" 
+				    else if [#"价格($)"] < 200 then "d.$150-200"
+				    else if [#"价格($)"] < 250 then "e.$200-250"
+				    else if [#"价格($)"] < 300 then "f.$250-300" 
+				    else "g.$300以上",
+				    type text
+				)
+				in
+				    #"Added Conditional Column1"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

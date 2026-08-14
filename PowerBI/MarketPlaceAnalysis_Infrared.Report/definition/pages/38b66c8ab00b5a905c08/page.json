@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "38b66c8ab00b5a905c08",
+  "displayName": "Motivation Analysis",
+  "displayOption": "ActualSize",
+  "height": 5000,
+  "width": 1500
+}

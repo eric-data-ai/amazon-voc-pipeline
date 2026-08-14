@@ -1,0 +1,42 @@
+table bAsinReview
+	lineageTag: 3fe30d80-5450-423e-bb36-ed664300fa8a
+
+	column ASIN
+		dataType: string
+		lineageTag: 5900f2c3-322a-485f-960d-db1cafcb94b2
+		summarizeBy: none
+		sourceColumn: ASIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_ID
+		dataType: string
+		lineageTag: 77b0aa19-c2d1-4304-9f37-9b4c0ea8384c
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_Key
+		dataType: string
+		lineageTag: 44b8247c-494f-49d1-9ebe-c365089306e1
+		summarizeBy: none
+		sourceColumn: Review_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bAsinReview = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    dim_asinreview_Table = voc_features_Schema{[Name="dim_asinreview",Kind="Table"]}[Data]
+				in
+				    dim_asinreview_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

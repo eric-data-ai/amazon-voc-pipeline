@@ -1,0 +1,39 @@
+table dDate
+	lineageTag: 0125fdc7-8b2f-4ef5-a27f-3b314204d2d2
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: 8229638b-8482-447c-abd2-b904eed27aee
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month = STARTOFMONTH(dDate[Date])
+		formatString: yyyy-mm
+		lineageTag: 926f0ed2-87ef-46bb-8f41-eabe40de08c9
+		summarizeBy: none
+		sortByColumn: 'MY Order'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'MY Order' = YEAR(dDate[Date]) * 100 + MONTH(dDate[Date])
+		formatString: 0
+		lineageTag: 555d2cd8-a1ef-49c8-80a8-9a915528e376
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dDate = calculated
+		mode: import
+		source = CALENDARAUTO()
+
+	annotation PBI_Id = 60b0bec475984bd1bb8159e1e5904bbe
+

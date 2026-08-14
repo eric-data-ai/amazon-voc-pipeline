@@ -1,0 +1,194 @@
+table dReviews
+	lineageTag: a4fe5c38-58e7-495d-a287-905268c409b8
+
+	measure 'Scene Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        VALUES(bScene[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: 1e9fd607-fa9c-453f-8505-0597c7091f90
+
+	measure 'All Reviews' = DISTINCTCOUNT(dReviews[Review_ID])
+		formatString: 0
+		lineageTag: 952f0104-8225-43da-afba-b129fd60ffd0
+
+	measure 'Scene Avg Rating' =
+			
+			CALCULATE(
+			    [All Rating],
+			    TREATAS(
+			        VALUES(bScene[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: bfdf18fd-665e-46a0-8e61-69f972307d2d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scene Rating StdDev' =
+			
+			CALCULATE(
+			    [All Rating StdDev],
+			    TREATAS(
+			        VALUES(bScene[Review_ID]),
+			        dReviews[Review_ID]
+			    )
+			)
+		lineageTag: 091bfdb2-b705-4ad9-be00-422f4af27517
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scene Vote per Review' = DIVIDE([Scene Votes], [Scene Reviews])
+		lineageTag: ea763351-41ae-4160-96dc-b0a9262543d1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scene Rating CV' = DIVIDE([Scene Rating StdDev], [Scene Avg Rating])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 10af6ebe-9c5b-4e1f-801a-c3800b2aa59f
+
+	measure 'All Rating' = AVERAGE(dReviews[Rating])
+		lineageTag: fbf8652b-4f7f-4081-8b13-814e6a96a634
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'All Votes' = SUM(dReviews[Helpful])
+		formatString: 0
+		lineageTag: 8fc9df78-5e7f-4332-af4b-d81fc2da735a
+
+	measure 'Scene Reviews Time Location' =
+			
+			CALCULATE(
+			    [Scene Reviews],
+			    TREATAS(
+			        INTERSECT(
+			            VALUES(bLocation[Review_ID]),
+			            VALUES(bTime[Review_ID])
+			        ),
+			        bScene[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: d3d48480-4a79-4095-8f2a-a2f2474ee337
+
+	measure 'All Rating StdDev' = STDEV.P(dReviews[Rating])
+		lineageTag: d2e72958-e57f-4495-8893-6b89fb226293
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scene Review Coverage%' =
+			
+			DIVIDE(
+			    [Scene Reviews],
+			    [All Reviews]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 824706e9-bd15-4df7-b04a-96a9c31af6af
+
+	measure 'Scene Friction Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        INTERSECT(
+			            VALUES(bScene[Review_ID]),
+			            VALUES(bFriction[Review_ID])
+			        ),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: 3efd9f91-552c-4ac6-837e-f8b7fc928b9d
+
+	measure 'Motivation Friction Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        INTERSECT(
+			            VALUES(bMotivation[Review_ID]),
+			            VALUES(bFriction[Review_ID])
+			        ),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: 39b06af4-04df-480b-9264-dc01448c2efe
+
+	measure MRating = MEDIAN(dReviews[Rating])
+		formatString: 0
+		lineageTag: c1a64bdf-d138-4f57-8945-6a9a82e892c7
+
+	column Rating
+		dataType: int64
+		formatString: 0
+		lineageTag: 320b2a11-7c64-40d2-925c-bea1131b3ea3
+		summarizeBy: sum
+		sourceColumn: Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Helpful
+		dataType: int64
+		formatString: 0
+		lineageTag: 025f4f32-87be-4866-a79a-52df1cd4be52
+		summarizeBy: sum
+		sourceColumn: Helpful
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_ID
+		dataType: string
+		lineageTag: 104dd2e1-a1f8-420e-ae55-1dbcc6cc4989
+		summarizeBy: none
+		sourceColumn: Review_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Keywords
+		dataType: string
+		lineageTag: e0e44246-6789-458f-a74b-12aa4a052e5e
+		summarizeBy: none
+		sourceColumn: Keywords
+
+		annotation SummarizationSetBy = Automatic
+
+	column Clean_Text
+		dataType: string
+		lineageTag: e3f3547a-56ae-4db3-99b2-9842d73e08b9
+		summarizeBy: none
+		sourceColumn: Clean_Text
+
+		annotation SummarizationSetBy = Automatic
+
+	column Review_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74a91ac4-0942-43f3-bf53-95dfc78386bc
+		summarizeBy: none
+		sourceColumn: Review_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dReviews = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"amazon-voc-pipeline_Database" = Source{[Name="amazon-voc-pipeline",Kind="Database"]}[Data],
+				    voc_features_Schema = #"amazon-voc-pipeline_Database"{[Name="voc_features",Kind="Schema"]}[Data],
+				    dim_review_Table = voc_features_Schema{[Name="dim_review",Kind="Table"]}[Data]
+				in
+				    dim_review_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

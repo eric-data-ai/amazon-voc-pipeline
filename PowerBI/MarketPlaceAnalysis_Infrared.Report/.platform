@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "MarketPlaceAnalysis_Infrared"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1825fb0b-4e82-4ae3-98c9-b1c4a2907c77"
+  }
+}
