@@ -13,7 +13,7 @@
 ```mermaid
 flowchart TD
 
-A[Amazon Reviews<br/>ASIN-based Review Data<br/>54 ASIN Sources]
+A[Amazon Reviews<br/>ASIN-based Review Data<br/>ASIN Sources]
 
 B[Google Cloud Storage<br/>Raw Data Landing Zone]
 
@@ -23,7 +23,7 @@ D[BigQuery<br/>Raw Layer<br/>review_raw]
 
 E[Cloud Run Job<br/>NLP Processing<br/>Hybrid NLP Engine]
 
-F[BigQuery<br/>Features Layer<br/>review_features]
+F[BigQuery<br/>Features Layer<br/>NLP Features<br/>Bridge Tables<br/>Dimension Tables]
 
 G[Power BI<br/>Semantic Model<br/>Star Schema & DAX Measures]
 
@@ -158,7 +158,7 @@ CALCULATE(
 )
 ```
 
-该度量通过虚拟关系计算同时属于所选动机和摩擦类别的评论，并在保持评论级粒度的前提下实现跨维度分析。
+该度量值通过虚拟关系计算同时属于所选动机和摩擦类别的评论，并在保持评论级粒度的前提下实现跨维度分析。
 
 ### 分析能力
 
@@ -184,6 +184,9 @@ amazon-voc-pipeline/
 ├── amazon-voc-nlp/
 │   └── 混合 NLP 分类管道
 │
+├── sql/
+│   └── BigQuery 特征层架构与数据建模脚本
+│
 ├── PowerBI/
 │   └── 包含语义模型和报表定义的 Power BI PBIP 项目
 │
@@ -197,8 +200,9 @@ amazon-voc-pipeline/
 
 - `amazon-voc-etl` — 数据摄取与标准化
 - `amazon-voc-nlp` — NLP 分类与特征生成
+- `sql` — BigQuery 特征层架构定义与分析数据建模脚本
 - `PowerBI` — 包含语义模型和报表定义的 Power BI PBIP 项目
-- `docs` — 项目文档和架构图
+- `docs` — 项目文档、架构图和语义模型图
 
 ---
 

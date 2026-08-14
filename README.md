@@ -13,7 +13,7 @@ The project integrates data engineering, hybrid NLP, BigQuery dimensional modeli
 ```mermaid
 flowchart TD
 
-A[Amazon Reviews<br/>ASIN-based Review Data<br/>54 ASIN Sources]
+A[Amazon Reviews<br/>ASIN-based Review Data<br/>ASIN Sources]
 
 B[Google Cloud Storage<br/>Raw Data Landing Zone]
 
@@ -23,7 +23,7 @@ D[BigQuery<br/>Raw Layer<br/>review_raw]
 
 E[Cloud Run Job<br/>NLP Processing<br/>Hybrid NLP Engine]
 
-F[BigQuery<br/>Features Layer<br/>review_features]
+F[BigQuery<br/>Features Layer<br/>NLP Features<br/>Bridge Tables<br/>Dimension Tables]
 
 G[Power BI<br/>Semantic Model<br/>Star Schema & DAX Measures]
 
@@ -184,6 +184,9 @@ amazon-voc-pipeline/
 ├── amazon-voc-nlp/
 │   └── Hybrid NLP classification pipeline
 │
+├── sql/
+│   └── BigQuery feature layer schema and data modeling scripts
+│
 ├── PowerBI/
 │   └── Power BI PBIP project containing semantic model and report definitions
 │
@@ -197,6 +200,7 @@ amazon-voc-pipeline/
 
 - `amazon-voc-etl` — data ingestion and normalization
 - `amazon-voc-nlp` — NLP classification and feature generation
+- `sql` — BigQuery feature layer schema and analytical data modeling scripts
 - `PowerBI` — Power BI PBIP project containing semantic model and report definitions
 - `docs` — project documentation and architecture diagrams
 
