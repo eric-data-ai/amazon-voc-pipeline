@@ -142,7 +142,7 @@ BigQuery 作为分析数据仓库并提供维度表，而 Power BI 通过关系�
 - 跨多个分析维度的筛选上下文管理
 - 针对场景、摩擦、动机分析的动态度量
 
-跨维度分析的 DAX 示例模式：
+跨维度分析的 DAX 示例：
 
 ```dax
 Motivation Friction Reviews =
