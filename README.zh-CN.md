@@ -8,9 +8,41 @@
 
 ---
 
-## 架构
+## System Architecture
 
-![系统架构](docs/architecture.png)
+```mermaid
+flowchart TD
+
+A[Amazon Reviews<br/>ASIN-based Review Data<br/>54 ASIN Sources]
+
+B[Google Cloud Storage<br/>Raw Data Landing Zone]
+
+C[Cloud Run Job<br/>ETL Pipeline<br/>Cleaning & Transformation]
+
+D[BigQuery<br/>Raw Layer<br/>review_raw]
+
+E[Cloud Run Job<br/>NLP Processing<br/>Hybrid NLP Engine]
+
+F[BigQuery<br/>Features Layer<br/>review_features]
+
+G[Power BI<br/>Semantic Model<br/>Star Schema & DAX Measures]
+
+H[VOC Analytics Dashboard<br/>Interactive Insights]
+
+
+A --> B
+B --> C
+C --> D
+D --> E
+E --> F
+F --> G
+G --> H
+
+
+style A fill:#f9f,stroke:#333,stroke-width:2px
+style E fill:#ffe6cc,stroke:#333,stroke-width:2px
+style H fill:#dfd,stroke:#333,stroke-width:2px
+```
 
 ---
 
