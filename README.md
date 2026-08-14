@@ -4,7 +4,7 @@
 
 A cloud-based Amazon Voice of Customer (VOC) analytics pipeline that transforms unstructured Amazon reviews into structured, business-oriented insights.
 
-The project integrates data engineering, hybrid NLP, BigQuery dimensional modeling, and Power BI into an end-to-end analytical pipeline.
+The project integrates data engineering, hybrid NLP, BigQuery dimensional modeling, and a Power BI semantic layer into an end-to-end analytical pipeline.
 
 ---
 
@@ -76,7 +76,69 @@ dim_review (1)
       └── location_bridge (*)
 ```
 
-The analytical model is a star schema centered on `dim_review`. Multi-valued NLP labels are resolved through bridge tables linked to `Review_ID`, enabling clean filtering, grouping, and drill-down in Power BI without creating Cartesian products.
+The analytical model follows a dimensional modeling approach with a star schema and bridge tables.
+
+Multi-valued NLP attributes are resolved through bridge tables linked to `Review_ID`, enabling clean filtering, grouping, and drill-down in Power BI without creating Cartesian products.
+
+This design avoids ambiguous filter propagation and preserves one-to-many analytical relationships in the semantic model.
+
+---
+
+## Power BI Semantic Model
+
+![Power BI Semantic Model](docs/powerbi-model.png)
+
+The semantic layer is implemented in Microsoft Power BI using a semantic model built on top of BigQuery dimensional tables.
+
+BigQuery serves as the analytical data warehouse and provides dimensional tables, while Power BI implements the semantic layer through relationship modeling, DAX measures, and interactive analytical experiences.
+
+The semantic model includes:
+
+- Tabular model design following dimensional modeling principles
+- Explicit measure layer using DAX
+- Star schema modeling with bridge tables
+- Dimension and bridge table relationships
+- Calculation logic for review coverage, rating distribution, friction analysis, and motivation analysis
+- Context-aware filtering across NLP dimensions
+- Review-level drill-down analysis
+
+Key modeling techniques include:
+
+- Bridge tables for multi-valued NLP dimensions
+- Review-level relationship preservation
+- `TREATAS` and set-based filtering for virtual relationship propagation
+- Filter context management across multiple analytical dimensions
+- Dynamic measures for scene, friction, and motivation analysis
+
+Example DAX pattern for cross-dimensional analysis:
+
+```dax
+Motivation Friction Reviews =
+CALCULATE(
+    [All Reviews],
+    TREATAS(
+        INTERSECT(
+            VALUES(bMotivation[Review_ID]),
+            VALUES(bFriction[Review_ID])
+        ),
+        dReviews[Review_ID]
+    )
+)
+```
+
+This measure demonstrates cross-dimensional analysis by calculating reviews that simultaneously belong to selected motivation and friction categories while preserving review-level granularity through virtual relationships.
+
+### Analytical Capabilities
+
+The Power BI semantic model enables:
+
+- Cross-dimensional analysis across scenes, frictions, motivations, time, and locations
+- Review coverage analysis to measure NLP classification penetration
+- Rating distribution and variability analysis
+- Customer friction discovery through NLP-driven dimensions
+- Review-level drill-through from aggregated insights to individual customer feedback
+
+PBIP stores report and semantic model definitions as text-based files, enabling source control and change tracking through Git.
 
 ---
 
@@ -85,14 +147,25 @@ The analytical model is a star schema centered on `dim_review`. Multi-valued NLP
 ```text
 amazon-voc-pipeline/
 ├── amazon-voc-etl/
+│   └── Data ingestion and normalization pipeline
+│
 ├── amazon-voc-nlp/
+│   └── Hybrid NLP classification pipeline
+│
+├── PowerBI/
+│   └── Power BI PBIP project containing semantic model and report definitions
+│
 ├── docs/
+│   └── Architecture and semantic model diagrams
+│
 ├── .gitignore
-└── README.md
+├── README.md
+└── README.zh-CN.md
 ```
 
 - `amazon-voc-etl` — data ingestion and normalization
 - `amazon-voc-nlp` — NLP classification and feature generation
+- `PowerBI` — Power BI PBIP project containing semantic model and report definitions
 - `docs` — project documentation and architecture diagrams
 
 ---
@@ -113,7 +186,7 @@ Google Cloud Storage · BigQuery · Cloud Run Jobs · Docker
 
 ### Business Intelligence
 
-Microsoft Power BI
+Microsoft Power BI · Tabular Semantic Model · DAX · Power Query · TMDL · PBIP Version Control
 
 ---
 
@@ -141,7 +214,8 @@ To reprocess reviews after fixing rules or data issues, update `MODEL_VERSION` t
 - Hybrid NLP 2.0
 - Multi-label bridge tables
 - Product-review dimensional model
-- Power BI analytical model
+- Power BI semantic model with DAX-based analytical calculation layer
+- PBIP-based report and semantic model version control
 - Git-based version control
 
 ### Planned

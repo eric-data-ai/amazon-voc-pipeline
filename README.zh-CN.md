@@ -4,7 +4,7 @@
 
 基于云端的亚马逊客户之声（VOC）分析管道，将非结构化的亚马逊评论转化为结构化、面向业务的分析洞察。
 
-项目整合了数据工程、混合 NLP、BigQuery 维度建模以及 Power BI，构建端到端的分析管道。
+项目整合了数据工程、混合 NLP、BigQuery 维度建模以及 Power BI 语义层，构建端到端的分析管道。
 
 ---
 
@@ -76,7 +76,69 @@ dim_review (1)
       └── location_bridge (*)
 ```
 
-分析模型是以 `dim_review` 为中心的星型模型。多值 NLP 标签通过关联到 `Review_ID` 的桥接表解析，从而在 Power BI 中实现干净的筛选、分组和下钻，而不会产生笛卡尔积。
+分析模型采用带桥接表的维度建模方法，结合星型模型与桥接表。
+
+多值 NLP 属性通过关联到 `Review_ID` 的桥接表解析，从而在 Power BI 中实现干净的筛选、分组和下钻，而不会产生笛卡尔积。
+
+该设计避免了语义模型中模糊的筛选传播，并保持了一对多的分析关系。
+
+---
+
+## Power BI 语义模型
+
+![Power BI 语义模型](docs/powerbi-model.png)
+
+语义层在 Microsoft Power BI 中实现，使用基于 BigQuery 维度表的语义模型。
+
+BigQuery 作为分析数据仓库并提供维度表，而 Power BI 通过关系建模、DAX 度量和交互式分析体验来实现语义层。
+
+语义模型包括：
+
+- 遵循维度建模原则的 Tabular 模型设计
+- 使用 DAX 的显式度量层
+- 带桥接表的星型模型建模
+- 维度表和桥接表关系
+- 评论覆盖率、评分分布、摩擦分析和动机分析的计算逻辑
+- 跨 NLP 维度的上下文感知筛选
+- 评论级下钻分析
+
+关键建模技术包括：
+
+- 用于多值 NLP 维度的桥接表
+- 评论级关系保留
+- 使用 `TREATAS` 和基于集合的筛选进行虚拟关系传播
+- 跨多个分析维度的筛选上下文管理
+- 针对场景、摩擦、动机分析的动态度量
+
+跨维度分析的 DAX 示例模式：
+
+```dax
+Motivation Friction Reviews =
+CALCULATE(
+    [All Reviews],
+    TREATAS(
+        INTERSECT(
+            VALUES(bMotivation[Review_ID]),
+            VALUES(bFriction[Review_ID])
+        ),
+        dReviews[Review_ID]
+    )
+)
+```
+
+该度量通过虚拟关系计算同时属于所选动机和摩擦类别的评论，并在保持评论级粒度的前提下实现跨维度分析。
+
+### 分析能力
+
+Power BI 语义模型支持：
+
+- 跨场景、摩擦、动机、时间和地点维度的交叉分析
+- 评论覆盖率分析，用于衡量 NLP 分类覆盖情况
+- 评分分布和变异性分析
+- 通过 NLP 驱动维度发现客户摩擦点
+- 从聚合洞察下钻到单条客户反馈的评论级下钻
+
+PBIP 以基于文本的文件存储报表和语义模型定义，支持通过 Git 进行源代码控制和变更追踪。
 
 ---
 
@@ -85,14 +147,25 @@ dim_review (1)
 ```text
 amazon-voc-pipeline/
 ├── amazon-voc-etl/
+│   └── 数据摄取与标准化管道
+│
 ├── amazon-voc-nlp/
+│   └── 混合 NLP 分类管道
+│
+├── PowerBI/
+│   └── 包含语义模型和报表定义的 Power BI PBIP 项目
+│
 ├── docs/
+│   └── 架构图和语义模型图
+│
 ├── .gitignore
-└── README.md
+├── README.md
+└── README.zh-CN.md
 ```
 
 - `amazon-voc-etl` — 数据摄取与标准化
 - `amazon-voc-nlp` — NLP 分类与特征生成
+- `PowerBI` — 包含语义模型和报表定义的 Power BI PBIP 项目
 - `docs` — 项目文档和架构图
 
 ---
@@ -113,7 +186,7 @@ Google Cloud Storage · BigQuery · Cloud Run Jobs · Docker
 
 ### 商业智能
 
-Microsoft Power BI
+Microsoft Power BI · Tabular 语义模型 · DAX · Power Query · TMDL · PBIP 版本控制
 
 ---
 
@@ -141,7 +214,8 @@ NLP 管道具备模型版本感知能力。
 - 混合 NLP 2.0
 - 多标签桥接表
 - 产品-评论维度模型
-- Power BI 分析模型
+- 基于 DAX 分析计算层的 Power BI 语义模型
+- 基于 PBIP 的报表和语义模型版本控制
 - 基于 Git 的版本控制
 
 ### 计划中
