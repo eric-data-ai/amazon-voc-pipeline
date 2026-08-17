@@ -146,9 +146,8 @@ table bFriction
 			RETURN
 			    Result
 			```
+		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 3ae610cd-bcd1-463a-a748-c933642ed5f0
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Review_ID
 		dataType: string
