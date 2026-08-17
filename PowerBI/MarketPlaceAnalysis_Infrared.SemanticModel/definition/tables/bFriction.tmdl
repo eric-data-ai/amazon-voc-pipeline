@@ -128,6 +128,28 @@ table bFriction
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: bb31eae1-34c1-47b7-8637-1103b70dcd9d
 
+	measure 'Friction% Rolling12M' = ```
+			
+			VAR CurrentMon = EOMONTH(MAX(dDate[Date]),0)
+			VAR PrevMon = EOMONTH(MAX(dDate[Date]), -13) + 1
+			VAR Rolling12M = 
+			    CALCULATE(
+			        [Friction Rate%],
+			        dDate[Date] >= PrevMon && dDate[Date] <= CurrentMon
+			    )
+			VAR Result = 
+			    IF(
+			        ISBLANK([All Reviews]),
+			        BLANK(),
+			        Rolling12M
+			    )
+			RETURN
+			    Result
+			```
+		lineageTag: 3ae610cd-bcd1-463a-a748-c933642ed5f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Review_ID
 		dataType: string
 		lineageTag: 020551e5-e713-49db-8455-3eba4a366c34

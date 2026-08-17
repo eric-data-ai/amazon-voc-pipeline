@@ -79,46 +79,26 @@
               },
               "queryRef": "bFriction.Friction Rate%",
               "nativeQueryRef": "Friction Rate%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction% Rolling12M"
+                }
+              },
+              "queryRef": "bFriction.Friction% Rolling12M",
+              "nativeQueryRef": "Friction% Rolling12M"
             }
           ]
         }
       }
     },
     "objects": {
-      "trend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "displayName": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Trend line 1'"
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "style": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dotted'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "labels": [
         {
           "properties": {
