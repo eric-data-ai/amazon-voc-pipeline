@@ -139,8 +139,7 @@ table bFriction
 			    )
 			VAR Result = 
 			    IF(
-			        ISBLANK([All Reviews]),
-			        BLANK(),
+			        NOT ISBLANK([All Reviews]),
 			        Rolling12M
 			    )
 			RETURN

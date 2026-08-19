@@ -71,11 +71,11 @@
                       "Entity": "AsinProduct"
                     }
                   },
-                  "Property": "ASIN"
+                  "Property": "品牌"
                 }
               },
-              "queryRef": "AsinProduct.ASIN",
-              "nativeQueryRef": "ASIN",
+              "queryRef": "AsinProduct.品牌",
+              "nativeQueryRef": "品牌",
               "active": true
             },
             {
@@ -92,6 +92,21 @@
               "queryRef": "AsinProduct.价格($)",
               "nativeQueryRef": "价格($)",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "ASIN"
+                }
+              },
+              "queryRef": "AsinProduct.ASIN",
+              "nativeQueryRef": "ASIN",
+              "active": false
             }
           ]
         }
@@ -161,7 +176,7 @@
           },
           {
             "queryRefs": [
-              "AsinProduct.ASIN"
+              "AsinProduct.品牌"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -172,7 +187,7 @@
                       "Entity": "AsinProduct"
                     }
                   },
-                  "Property": "ASIN"
+                  "Property": "品牌"
                 }
               }
             ],
@@ -184,6 +199,12 @@
             ],
             "isCollapsed": true,
             "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "AsinProduct.ASIN"
+            ],
+            "isCollapsed": true
           }
         ],
         "root": {
@@ -212,7 +233,7 @@
                       "identityValues": [
                         {
                           "Literal": {
-                            "Value": "'B09CLM44TM'"
+                            "Value": "'Bestqool'"
                           }
                         }
                       ],
@@ -392,20 +413,6 @@
               }
             },
             "Property": "Sub_Scene"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "77db4b61601e84525664",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "AsinProduct"
-              }
-            },
-            "Property": "ASIN"
           }
         },
         "type": "Categorical"

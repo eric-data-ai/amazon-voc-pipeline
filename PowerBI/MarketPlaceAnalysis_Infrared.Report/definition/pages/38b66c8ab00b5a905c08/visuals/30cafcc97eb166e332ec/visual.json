@@ -71,6 +71,21 @@
                       "Entity": "AsinProduct"
                     }
                   },
+                  "Property": "品牌"
+                }
+              },
+              "queryRef": "AsinProduct.品牌",
+              "nativeQueryRef": "品牌",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
                   "Property": "ASIN"
                 }
               },
@@ -161,6 +176,25 @@
           },
           {
             "queryRefs": [
+              "AsinProduct.品牌"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "品牌"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
               "AsinProduct.ASIN"
             ],
             "isCollapsed": true,
@@ -192,7 +226,7 @@
               "identityValues": [
                 {
                   "Literal": {
-                    "Value": "'External Triggers'"
+                    "Value": "'Health & Recovery'"
                   }
                 }
               ],
@@ -202,7 +236,7 @@
                   "identityValues": [
                     {
                       "Literal": {
-                        "Value": "'Gift_Purchase'"
+                        "Value": "'Sleep_Improvement'"
                       }
                     }
                   ],
@@ -212,11 +246,23 @@
                       "identityValues": [
                         {
                           "Literal": {
-                            "Value": "'B09CLM44TM'"
+                            "Value": "'Bestqool'"
                           }
                         }
                       ],
-                      "isToggled": true
+                      "isToggled": true,
+                      "children": [
+                        {
+                          "identityValues": [
+                            {
+                              "Literal": {
+                                "Value": "'B0FQBSZ9P9'"
+                              }
+                            }
+                          ],
+                          "isToggled": true
+                        }
+                      ]
                     }
                   ]
                 }
