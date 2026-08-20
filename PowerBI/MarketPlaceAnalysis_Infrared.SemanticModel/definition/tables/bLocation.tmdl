@@ -25,6 +25,21 @@ table bLocation
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: a0aee4e1-cbb2-418f-9e82-66db64a82173
 
+	measure 'Location Friction Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    TREATAS(
+			        INTERSECT(
+			            VALUES(bLocation[Review_ID]),
+			            VALUES(bFriction[Review_ID])
+			        ),
+			        dReviews[Review_ID]
+			    )
+			)
+		formatString: 0
+		lineageTag: e14383fd-281c-4fc6-8846-22551b263427
+
 	column Review_ID
 		dataType: string
 		lineageTag: dc2c5a75-e516-4646-9c8d-4e34d232df74

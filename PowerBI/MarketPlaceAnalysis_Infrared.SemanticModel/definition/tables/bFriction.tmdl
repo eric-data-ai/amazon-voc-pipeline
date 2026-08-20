@@ -128,11 +128,11 @@ table bFriction
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: bb31eae1-34c1-47b7-8637-1103b70dcd9d
 
-	measure 'Friction% Rolling12M' = ```
+	measure 'Friction% Rolling18M' = ```
 			
 			VAR CurrentMon = EOMONTH(MAX(dDate[Date]),0)
-			VAR PrevMon = EOMONTH(MAX(dDate[Date]), -13) + 1
-			VAR Rolling12M = 
+			VAR PrevMon = EOMONTH(MAX(dDate[Date]), -18) + 1
+			VAR Rolling18M = 
 			    CALCULATE(
 			        [Friction Rate%],
 			        dDate[Date] >= PrevMon && dDate[Date] <= CurrentMon
@@ -140,7 +140,7 @@ table bFriction
 			VAR Result = 
 			    IF(
 			        NOT ISBLANK([All Reviews]),
-			        Rolling12M
+			        Rolling18M
 			    )
 			RETURN
 			    Result

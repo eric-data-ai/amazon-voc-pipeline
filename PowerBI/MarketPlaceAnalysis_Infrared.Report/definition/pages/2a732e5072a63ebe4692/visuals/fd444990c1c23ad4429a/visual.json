@@ -88,11 +88,11 @@
                       "Entity": "bFriction"
                     }
                   },
-                  "Property": "Friction% Rolling12M"
+                  "Property": "Friction% Rolling18M"
                 }
               },
               "queryRef": "bFriction.Friction% Rolling12M",
-              "nativeQueryRef": "Friction% Rolling12M"
+              "nativeQueryRef": "Friction% Rolling18M"
             }
           ]
         }
