@@ -148,6 +148,19 @@ table bFriction
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 3ae610cd-bcd1-463a-a748-c933642ed5f0
 
+	measure 'Friction Negative Reviews' =
+			
+			CALCULATE(
+			    [Friction Reviews],
+			    dReviews[Rating] <= 3
+			)
+		formatString: 0
+		lineageTag: 8db7087f-a5ae-4313-8134-f2fbf457f3ea
+
+	measure 'Friction Negative%' = DIVIDE([Friction Negative Reviews], [Friction Reviews])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7a8ca563-2314-491d-9e75-14d713cee262
+
 	column Review_ID
 		dataType: string
 		lineageTag: 020551e5-e713-49db-8455-3eba4a366c34

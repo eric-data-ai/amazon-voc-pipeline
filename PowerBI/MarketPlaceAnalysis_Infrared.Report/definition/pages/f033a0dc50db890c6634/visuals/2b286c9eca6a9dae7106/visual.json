@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "f5cc6524425da07ec648",
+  "name": "2b286c9eca6a9dae7106",
   "position": {
-    "x": 1155,
-    "y": 38,
-    "z": 12000,
+    "x": 875,
+    "y": 40,
+    "z": 17002,
     "height": 99,
-    "width": 192,
-    "tabOrder": 11000
+    "width": 211,
+    "tabOrder": 17003
   },
   "visual": {
     "visualType": "cardVisual",
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "bMotivation"
+                      "Entity": "bFriction"
                     }
                   },
-                  "Property": "Motivation Coverage%"
+                  "Property": "Friction Negative%"
                 }
               },
-              "queryRef": "bMotivation.Motivation Coverage%",
-              "nativeQueryRef": "Motivation Coverage%"
+              "queryRef": "bFriction.Friction Negative%",
+              "nativeQueryRef": "Friction Negative%"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "bMotivation"
+                    "Entity": "bFriction"
                   }
                 },
-                "Property": "Motivation Coverage%"
+                "Property": "Friction Negative%"
               }
             },
             "direction": "Descending"
@@ -141,7 +141,7 @@
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bFriction.Friction Negative%"
           }
         }
       ],
@@ -195,13 +195,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'动机覆盖率'"
+                  "Value": "'差评率'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bFriction.Friction Negative%"
           }
         }
       ],
@@ -271,23 +271,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "591e05f5b072473990ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Coverage%"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

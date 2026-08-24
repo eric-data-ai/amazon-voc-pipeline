@@ -124,6 +124,19 @@ table dReviews
 		formatString: 0
 		lineageTag: c1a64bdf-d138-4f57-8945-6a9a82e892c7
 
+	measure 'Negative Reviews' =
+			
+			CALCULATE(
+			    [All Reviews],
+			    dReviews[Rating] <= 3
+			)
+		formatString: 0
+		lineageTag: f56a8fed-25e8-4acd-bb29-52a674d8dfcf
+
+	measure 'Negative Reviews Pct%' = DIVIDE([Negative Reviews], [All Reviews])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5dd8b171-4c67-49cf-be07-4a304567fd17
+
 	column Rating
 		dataType: int64
 		formatString: 0

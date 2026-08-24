@@ -1,11 +1,11 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "6be9d32603c803ee5061",
   "position": {
-    "x": 636,
-    "y": 38,
+    "x": 1122,
+    "y": 44,
     "z": 11000,
-    "height": 99,
+    "height": 91,
     "width": 192,
     "tabOrder": 11000
   },
@@ -128,6 +128,20 @@
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "bFriction.Friction Coverage%"
           }
         }
       ],

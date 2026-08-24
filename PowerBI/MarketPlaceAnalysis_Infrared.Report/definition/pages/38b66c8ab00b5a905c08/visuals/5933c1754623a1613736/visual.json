@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "f5cc6524425da07ec648",
+  "name": "5933c1754623a1613736",
   "position": {
-    "x": 1155,
+    "x": 885,
     "y": 38,
-    "z": 12000,
+    "z": 17502,
     "height": 99,
-    "width": 192,
-    "tabOrder": 11000
+    "width": 211,
+    "tabOrder": 17003
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "bMotivation"
                     }
                   },
-                  "Property": "Motivation Coverage%"
+                  "Property": "Motivation Negative%"
                 }
               },
-              "queryRef": "bMotivation.Motivation Coverage%",
-              "nativeQueryRef": "Motivation Coverage%"
+              "queryRef": "bMotivation.Motivation Negative%",
+              "nativeQueryRef": "Motivation Negative%"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "bMotivation"
                   }
                 },
-                "Property": "Motivation Coverage%"
+                "Property": "Motivation Negative%"
               }
             },
             "direction": "Descending"
@@ -141,7 +141,7 @@
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bMotivation.Motivation Negative%"
           }
         }
       ],
@@ -195,13 +195,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'动机覆盖率'"
+                  "Value": "'差评率'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bMotivation.Motivation Negative%"
           }
         }
       ],
@@ -271,23 +271,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "591e05f5b072473990ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Coverage%"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "f5cc6524425da07ec648",
+  "name": "98d3c86a961e0b1587c2",
   "position": {
-    "x": 1155,
+    "x": 618,
     "y": 38,
-    "z": 12000,
+    "z": 17001,
     "height": 99,
-    "width": 192,
-    "tabOrder": 11000
+    "width": 211,
+    "tabOrder": 17002
   },
   "visual": {
     "visualType": "cardVisual",
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "bMotivation"
+                      "Entity": "bScene"
                     }
                   },
-                  "Property": "Motivation Coverage%"
+                  "Property": "Scene Negative Reviews"
                 }
               },
-              "queryRef": "bMotivation.Motivation Coverage%",
-              "nativeQueryRef": "Motivation Coverage%"
+              "queryRef": "bScene.Scene Negative Reviews",
+              "nativeQueryRef": "Scene Negative Reviews"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "bMotivation"
+                    "Entity": "bScene"
                   }
                 },
-                "Property": "Motivation Coverage%"
+                "Property": "Scene Negative Reviews"
               }
             },
             "direction": "Descending"
@@ -113,6 +113,13 @@
                   "Value": "23D"
                 }
               }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
@@ -128,20 +135,6 @@
                 }
               }
             }
-          }
-        },
-        {
-          "properties": {
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
           }
         }
       ],
@@ -195,13 +188,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'动机覆盖率'"
+                  "Value": "'差评数'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bScene.Scene Negative Reviews"
           }
         }
       ],
@@ -243,7 +236,7 @@
           }
         }
       ],
-      "background": [
+      "border": [
         {
           "properties": {
             "show": {
@@ -256,7 +249,7 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
@@ -271,23 +264,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "591e05f5b072473990ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Coverage%"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

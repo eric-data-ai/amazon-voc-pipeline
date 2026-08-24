@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "8a7555c80949424da699",
   "position": {
     "x": 203,
@@ -10,7 +10,7 @@
     "tabOrder": 1000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "donutChart",
     "query": {
       "queryState": {
         "Category": {
@@ -134,54 +134,21 @@
             }
           }
         }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "dbf47dde0e39e99c8696",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation_Main"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "43dea822dcbd92dc5069",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation_Sub"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "393610bec38da99c8660",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Reviews"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

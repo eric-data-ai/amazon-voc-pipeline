@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "f5cc6524425da07ec648",
+  "name": "a3353469fe1b54b8ad5d",
   "position": {
-    "x": 1155,
-    "y": 38,
-    "z": 12000,
+    "x": 628,
+    "y": 31,
+    "z": 17003,
     "height": 99,
-    "width": 192,
-    "tabOrder": 11000
+    "width": 161,
+    "tabOrder": 17004
   },
   "visual": {
     "visualType": "cardVisual",
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "bMotivation"
+                      "Entity": "dReviews"
                     }
                   },
-                  "Property": "Motivation Coverage%"
+                  "Property": "Negative Reviews Pct%"
                 }
               },
-              "queryRef": "bMotivation.Motivation Coverage%",
-              "nativeQueryRef": "Motivation Coverage%"
+              "queryRef": "dReviews.Negative Reviews Pct%",
+              "nativeQueryRef": "Negative Reviews Pct%"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "bMotivation"
+                    "Entity": "dReviews"
                   }
                 },
-                "Property": "Motivation Coverage%"
+                "Property": "Negative Reviews Pct%"
               }
             },
             "direction": "Descending"
@@ -141,7 +141,7 @@
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "dReviews.Negative Reviews Pct%"
           }
         }
       ],
@@ -195,13 +195,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'动机覆盖率'"
+                  "Value": "'差评率'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "dReviews.Negative Reviews Pct%"
           }
         }
       ],
@@ -243,7 +243,7 @@
           }
         }
       ],
-      "background": [
+      "border": [
         {
           "properties": {
             "show": {
@@ -256,7 +256,7 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
@@ -271,23 +271,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "591e05f5b072473990ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Coverage%"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

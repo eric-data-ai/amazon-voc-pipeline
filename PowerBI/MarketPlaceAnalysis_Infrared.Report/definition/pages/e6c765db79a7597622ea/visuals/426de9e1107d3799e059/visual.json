@@ -1,16 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "426de9e1107d3799e059",
   "position": {
-    "x": 13,
+    "x": 535,
     "y": 737,
     "z": 13000,
-    "height": 269,
-    "width": 483,
+    "height": 284,
+    "width": 475,
     "tabOrder": 12000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "donutChart",
     "query": {
       "queryState": {
         "Category": {
@@ -188,12 +188,52 @@
             }
           }
         }
+      ],
+      "value": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "23D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
       "title": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'月销售额 by 类型'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'by Pattern'"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
@@ -206,51 +246,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "28f2ab918620206ab966",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "Pattern"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "a9f124e28530800457a8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "平均单价"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6c5f2cd04d982d03ddd0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "月销售额"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
-  "name": "f5cc6524425da07ec648",
+  "name": "d9751e5cde5ca904a6fd",
   "position": {
-    "x": 1155,
-    "y": 38,
-    "z": 12000,
+    "x": 600,
+    "y": 39.5,
+    "z": 17001,
     "height": 99,
-    "width": 192,
-    "tabOrder": 11000
+    "width": 211,
+    "tabOrder": 17002
   },
   "visual": {
     "visualType": "cardVisual",
@@ -20,14 +20,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "bMotivation"
+                      "Entity": "bFriction"
                     }
                   },
-                  "Property": "Motivation Coverage%"
+                  "Property": "Friction Negative Reviews"
                 }
               },
-              "queryRef": "bMotivation.Motivation Coverage%",
-              "nativeQueryRef": "Motivation Coverage%"
+              "queryRef": "bFriction.Friction Negative Reviews",
+              "nativeQueryRef": "Friction Negative Reviews"
             }
           ]
         }
@@ -39,10 +39,10 @@
               "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "bMotivation"
+                    "Entity": "bFriction"
                   }
                 },
-                "Property": "Motivation Coverage%"
+                "Property": "Friction Negative Reviews"
               }
             },
             "direction": "Descending"
@@ -132,6 +132,13 @@
         },
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "bold": {
               "expr": {
                 "Literal": {
@@ -141,7 +148,7 @@
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bFriction.Friction Negative Reviews"
           }
         }
       ],
@@ -195,13 +202,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'动机覆盖率'"
+                  "Value": "'差评数'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "bMotivation.Motivation Coverage%"
+            "metadata": "bFriction.Friction Negative Reviews"
           }
         }
       ],
@@ -271,23 +278,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "591e05f5b072473990ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bMotivation"
-              }
-            },
-            "Property": "Motivation Coverage%"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

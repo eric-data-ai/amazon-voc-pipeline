@@ -1,16 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "88218e6300a88909010a",
   "position": {
-    "x": 526,
+    "x": 18,
     "y": 737,
     "z": 20000,
-    "height": 269,
-    "width": 468,
+    "height": 287,
+    "width": 495,
     "tabOrder": 19000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "donutChart",
     "query": {
       "queryState": {
         "Category": {
@@ -188,10 +188,43 @@
             }
           }
         }
+      ],
+      "value": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "23D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
       "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'月度销量 by 类型'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
         {
           "properties": {
             "show": {
@@ -206,51 +239,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "8c1f4e65d0c936b40e73",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "Pattern"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "0557c79288cc7095a468",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "平均单价"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "01719117449e6b327960",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "fData"
-              }
-            },
-            "Property": "月度销量"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

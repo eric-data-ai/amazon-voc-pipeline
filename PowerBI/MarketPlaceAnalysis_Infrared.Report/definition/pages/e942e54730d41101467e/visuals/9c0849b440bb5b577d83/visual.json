@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "9c0849b440bb5b577d83",
   "position": {
     "x": 228,
@@ -10,7 +10,7 @@
     "tabOrder": 8000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "donutChart",
     "query": {
       "queryState": {
         "Category": {
@@ -147,54 +147,21 @@
             }
           }
         }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "8808ccea20ee50182b1a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bScene"
-              }
-            },
-            "Property": "Main_Scene"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "78de8682d3cea04a126e",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bScene"
-              }
-            },
-            "Property": "Sub_Scene"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "56725bc5d4c1cdc57d08",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bScene"
-              }
-            },
-            "Property": "Scene Votes"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

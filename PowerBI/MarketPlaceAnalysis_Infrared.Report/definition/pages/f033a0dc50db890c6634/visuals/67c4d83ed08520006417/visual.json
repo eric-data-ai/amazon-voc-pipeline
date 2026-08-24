@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "67c4d83ed08520006417",
   "position": {
     "x": 204,
@@ -10,7 +10,7 @@
     "tabOrder": 8000
   },
   "visual": {
-    "visualType": "pieChart",
+    "visualType": "donutChart",
     "query": {
       "queryState": {
         "Category": {
@@ -134,54 +134,21 @@
             }
           }
         }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6f1f626c99406d60d350",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bFriction"
-              }
-            },
-            "Property": "Friction_Main"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "6315a063a1e766c650e7",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bFriction"
-              }
-            },
-            "Property": "Friction_Sub"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "4e6e640e1ecd34e1a577",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "bFriction"
-              }
-            },
-            "Property": "Friction Votes"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

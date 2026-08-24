@@ -84,6 +84,19 @@ table bMotivation
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: ecad1e5b-0c31-4640-b082-707f536fa361
 
+	measure 'Motivation Negative Reviews' =
+			
+			CALCULATE(
+			    [Motivation Reviews],
+			    dReviews[Rating] <= 3
+			)
+		formatString: 0
+		lineageTag: a7fa3dbb-cef3-45b4-ab2e-a49957f8aa0a
+
+	measure 'Motivation Negative%' = DIVIDE([Motivation Negative Reviews], [Motivation Reviews])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d304e8cc-794f-436f-b15a-870f728db94a
+
 	column Review_ID
 		dataType: string
 		lineageTag: 5ca83f63-773e-4af4-8c0a-965bcaf36e6f

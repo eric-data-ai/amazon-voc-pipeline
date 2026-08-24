@@ -13,6 +13,19 @@ table bScene
 		formatString: 0
 		lineageTag: ce59b8cc-dc47-495a-b2c7-3edf2348a64e
 
+	measure 'Scene Negative Reviews' =
+			
+			CALCULATE(
+			    [Scene Reviews],
+			    dReviews[Rating] <= 3
+			)
+		formatString: 0
+		lineageTag: 637187b1-fdfa-440e-b868-e52e3aeafd1b
+
+	measure 'Scene Negative%' = DIVIDE([Scene Negative Reviews], [Scene Reviews])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 97fdaa6d-755b-4701-80ca-5db85d0e9826
+
 	column Review_ID
 		dataType: string
 		lineageTag: 55325357-808b-4c8c-a00e-1b1604cd17f2
