@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "877027777d2752319ad6",
   "position": {
     "x": 204,
@@ -91,11 +91,11 @@
                       "Entity": "dReviews"
                     }
                   },
-                  "Property": "Scene Friction Reviews"
+                  "Property": "Scene Friction Reviews 2"
                 }
               },
-              "queryRef": "fReviews.Scene Friction Reviews",
-              "nativeQueryRef": "Scene Friction Reviews"
+              "queryRef": "dReviews.Scene Friction Reviews 2",
+              "nativeQueryRef": "Scene Friction Reviews 2"
             }
           ]
         }
@@ -110,7 +110,7 @@
                     "Entity": "dReviews"
                   }
                 },
-                "Property": "Scene Friction Reviews"
+                "Property": "Scene Friction Reviews 2"
               }
             },
             "direction": "Descending"

@@ -1,15 +1,7 @@
 table dReviews
 	lineageTag: a4fe5c38-58e7-495d-a287-905268c409b8
 
-	measure 'Scene Reviews' =
-			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        VALUES(bScene[Review_ID]),
-			        dReviews[Review_ID]
-			    )
-			)
+	measure 'Scene Reviews' = DISTINCTCOUNT(bScene[Review_ID])
 		formatString: 0
 		lineageTag: 1e9fd607-fa9c-453f-8505-0597c7091f90
 
@@ -136,6 +128,28 @@ table dReviews
 	measure 'Negative Reviews Pct%' = DIVIDE([Negative Reviews], [All Reviews])
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 5dd8b171-4c67-49cf-be07-4a304567fd17
+
+	measure 'Scene Friction Reviews 2' =
+			
+			COUNTROWS(
+			    INTERSECT(
+			        VALUES(bScene[Review_ID]),
+			        VALUES(bFriction[Review_ID])
+			    )
+			)
+		formatString: 0
+		lineageTag: 19ad8c2b-8cc5-4e81-b43f-c29e797a97f9
+
+	measure 'Motivation Friction Reviews 2' =
+			
+			COUNTROWS(
+			    INTERSECT(
+			        VALUES(bMotivation[Review_ID]),
+			        VALUES(bFriction[Review_ID])
+			    )
+			)
+		formatString: 0
+		lineageTag: f289777d-eead-497b-8bd9-cebc468f09fb
 
 	column Rating
 		dataType: int64

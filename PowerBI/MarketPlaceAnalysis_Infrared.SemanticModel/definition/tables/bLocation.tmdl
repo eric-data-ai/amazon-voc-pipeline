@@ -27,14 +27,10 @@ table bLocation
 
 	measure 'Location Friction Reviews' =
 			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        INTERSECT(
-			            VALUES(bLocation[Review_ID]),
-			            VALUES(bFriction[Review_ID])
-			        ),
-			        dReviews[Review_ID]
+			COUNTROWS(
+			    INTERSECT(
+			        VALUES(bLocation[Review_ID]),
+			        VALUES(bFriction[Review_ID])
 			    )
 			)
 		formatString: 0

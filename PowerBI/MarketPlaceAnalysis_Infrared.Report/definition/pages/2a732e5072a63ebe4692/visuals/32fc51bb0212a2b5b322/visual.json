@@ -1,10 +1,10 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "32fc51bb0212a2b5b322",
   "position": {
     "x": 204,
     "y": 2334,
-    "z": 7000,
+    "z": 8000,
     "height": 428,
     "width": 1246,
     "tabOrder": 3000
@@ -91,11 +91,11 @@
                       "Entity": "dReviews"
                     }
                   },
-                  "Property": "Motivation Friction Reviews"
+                  "Property": "Motivation Friction Reviews 2"
                 }
               },
-              "queryRef": "fReviews.Motivation Friction Reviews",
-              "nativeQueryRef": "Motivation Friction Reviews"
+              "queryRef": "dReviews.Motivation Friction Reviews 2",
+              "nativeQueryRef": "Motivation Friction Reviews 2"
             }
           ]
         }
@@ -110,7 +110,7 @@
                     "Entity": "dReviews"
                   }
                 },
-                "Property": "Motivation Friction Reviews"
+                "Property": "Motivation Friction Reviews 2"
               }
             },
             "direction": "Descending"

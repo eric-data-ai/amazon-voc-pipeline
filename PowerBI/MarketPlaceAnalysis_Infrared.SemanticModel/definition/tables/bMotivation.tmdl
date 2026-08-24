@@ -13,15 +13,7 @@ table bMotivation
 		formatString: 0
 		lineageTag: 939ddcaf-be66-456a-9d70-04ad21af7b07
 
-	measure 'Motivation Reviews' =
-			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        VALUES(bMotivation[Review_ID]),
-			        dReviews[Review_ID]
-			    )
-			)
+	measure 'Motivation Reviews' = DISTINCTCOUNT(bMotivation[Review_ID])
 		formatString: 0
 		lineageTag: e4960353-16ee-479b-8c8e-8aa057d2d890
 

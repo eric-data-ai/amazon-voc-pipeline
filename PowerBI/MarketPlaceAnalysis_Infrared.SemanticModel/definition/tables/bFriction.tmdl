@@ -1,15 +1,7 @@
 table bFriction
 	lineageTag: e886a9cb-3961-43be-b7ec-7534dbaa807d
 
-	measure 'Friction Reviews' =
-			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        VALUES(bFriction[Review_ID]),
-			        dReviews[Review_ID]
-			    )
-			)
+	measure 'Friction Reviews' = DISTINCTCOUNT(bFriction[Review_ID])
 		formatString: 0
 		lineageTag: fcb74bc5-687d-46da-9b92-63247ed1380b
 
