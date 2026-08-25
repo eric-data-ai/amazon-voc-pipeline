@@ -84,14 +84,10 @@ table dReviews
 
 	measure 'Scene Friction Reviews' =
 			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        INTERSECT(
-			            VALUES(bScene[Review_ID]),
-			            VALUES(bFriction[Review_ID])
-			        ),
-			        dReviews[Review_ID]
+			COUNTROWS(
+			    INTERSECT(
+			        VALUES(bScene[Review_ID]),
+			        VALUES(bFriction[Review_ID])
 			    )
 			)
 		formatString: 0
@@ -99,14 +95,10 @@ table dReviews
 
 	measure 'Motivation Friction Reviews' =
 			
-			CALCULATE(
-			    [All Reviews],
-			    TREATAS(
-			        INTERSECT(
-			            VALUES(bMotivation[Review_ID]),
-			            VALUES(bFriction[Review_ID])
-			        ),
-			        dReviews[Review_ID]
+			COUNTROWS(
+			    INTERSECT(
+			        VALUES(bMotivation[Review_ID]),
+			        VALUES(bFriction[Review_ID])
 			    )
 			)
 		formatString: 0
@@ -129,27 +121,27 @@ table dReviews
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 5dd8b171-4c67-49cf-be07-4a304567fd17
 
-	measure 'Scene Friction Reviews 2' =
+	measure 'Scene Friction Negative Reviews' =
 			
-			COUNTROWS(
-			    INTERSECT(
-			        VALUES(bScene[Review_ID]),
-			        VALUES(bFriction[Review_ID])
-			    )
+			CALCULATE(
+			    [Scene Friction Reviews],
+			    dReviews[Rating] <= 3
 			)
 		formatString: 0
-		lineageTag: 19ad8c2b-8cc5-4e81-b43f-c29e797a97f9
+		lineageTag: a5fce574-cc19-414c-84a6-8dd7ade53deb
 
-	measure 'Motivation Friction Reviews 2' =
+	measure 'Scene Friction Negative%' = DIVIDE([Scene Friction Negative Reviews], [Scene Friction Reviews])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3abdf2b0-ea78-4067-89a4-599b67be4879
+
+	measure 'Scene Friction Mention%' =
 			
-			COUNTROWS(
-			    INTERSECT(
-			        VALUES(bMotivation[Review_ID]),
-			        VALUES(bFriction[Review_ID])
-			    )
+			DIVIDE(
+			    [Scene Friction Reviews],
+			    [Scene Reviews]
 			)
-		formatString: 0
-		lineageTag: f289777d-eead-497b-8bd9-cebc468f09fb
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9b6f6006-93f7-402c-b4a0-e0829be7d19e
 
 	column Rating
 		dataType: int64

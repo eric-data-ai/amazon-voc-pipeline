@@ -91,11 +91,11 @@
                       "Entity": "dReviews"
                     }
                   },
-                  "Property": "Motivation Friction Reviews 2"
+                  "Property": "Motivation Friction Reviews"
                 }
               },
-              "queryRef": "dReviews.Motivation Friction Reviews 2",
-              "nativeQueryRef": "Motivation Friction Reviews 2"
+              "queryRef": "dReviews.Motivation Friction Reviews",
+              "nativeQueryRef": "Motivation Friction Reviews"
             }
           ]
         }
@@ -110,7 +110,7 @@
                     "Entity": "dReviews"
                   }
                 },
-                "Property": "Motivation Friction Reviews 2"
+                "Property": "Motivation Friction Reviews"
               }
             },
             "direction": "Descending"
@@ -172,16 +172,6 @@
                 }
               ],
               "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'Health & Recovery'"
-                  }
-                }
-              ],
-              "isToggled": true
             }
           ]
         }
@@ -211,6 +201,72 @@
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "dReviews"
+                            }
+                          },
+                          "Property": "Motivation Friction Reviews"
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient3": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#F5EFE8'"
+                              }
+                            }
+                          },
+                          "mid": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#D8B08C'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#A94F2B'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "dReviews.Motivation Friction Reviews"
           }
         }
       ],
@@ -271,5 +327,79 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "68ed870e72014a873f8e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4e57ff4ee4d7ef706428",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bFriction"
+              }
+            },
+            "Property": "Friction_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2bdb927797af038966fa",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bMotivation"
+              }
+            },
+            "Property": "Motivation_Main"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e33585e54ca9c4fb5f99",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "bMotivation"
+              }
+            },
+            "Property": "Motivation_Sub"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5faded5f4028634cc11e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dReviews"
+              }
+            },
+            "Property": "Motivation Friction Reviews"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

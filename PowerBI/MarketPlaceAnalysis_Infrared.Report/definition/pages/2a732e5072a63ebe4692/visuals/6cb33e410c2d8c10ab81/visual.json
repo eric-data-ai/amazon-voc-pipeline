@@ -47,6 +47,24 @@
             }
           ]
         },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bMotivation"
+                    }
+                  },
+                  "Property": "Motivation Negative%"
+                }
+              },
+              "queryRef": "bMotivation.Motivation Negative%",
+              "nativeQueryRef": "Motivation Negative%"
+            }
+          ]
+        },
         "Y": {
           "projections": [
             {

@@ -47,6 +47,24 @@
             }
           ]
         },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bScene"
+                    }
+                  },
+                  "Property": "Scene Negative%"
+                }
+              },
+              "queryRef": "bScene.Scene Negative%",
+              "nativeQueryRef": "Scene Negative%"
+            }
+          ]
+        },
         "Y": {
           "projections": [
             {

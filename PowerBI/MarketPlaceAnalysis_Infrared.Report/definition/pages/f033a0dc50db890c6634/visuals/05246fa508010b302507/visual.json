@@ -47,6 +47,24 @@
             }
           ]
         },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "bFriction"
+                    }
+                  },
+                  "Property": "Friction Negative%"
+                }
+              },
+              "queryRef": "bFriction.Friction Negative%",
+              "nativeQueryRef": "Friction Negative%"
+            }
+          ]
+        },
         "Y": {
           "projections": [
             {
