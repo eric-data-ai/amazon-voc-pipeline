@@ -130,19 +130,6 @@ table dReviews
 		formatString: 0
 		lineageTag: a5fce574-cc19-414c-84a6-8dd7ade53deb
 
-	measure 'Scene Friction Negative%' = DIVIDE([Scene Friction Negative Reviews], [Scene Friction Reviews])
-		formatString: 0.00%;-0.00%;0.00%
-		lineageTag: 3abdf2b0-ea78-4067-89a4-599b67be4879
-
-	measure 'Scene Friction Mention%' =
-			
-			DIVIDE(
-			    [Scene Friction Reviews],
-			    [Scene Reviews]
-			)
-		formatString: 0.00%;-0.00%;0.00%
-		lineageTag: 9b6f6006-93f7-402c-b4a0-e0829be7d19e
-
 	column Rating
 		dataType: int64
 		formatString: 0

@@ -38,6 +38,21 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "品牌"
+                }
+              },
+              "queryRef": "AsinProduct.品牌",
+              "nativeQueryRef": "品牌",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
                       "Entity": "bFriction"
                     }
                   },
@@ -71,42 +86,30 @@
                       "Entity": "AsinProduct"
                     }
                   },
-                  "Property": "品牌"
-                }
-              },
-              "queryRef": "AsinProduct.品牌",
-              "nativeQueryRef": "品牌",
-              "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "AsinProduct"
-                    }
-                  },
                   "Property": "ASIN"
                 }
               },
               "queryRef": "AsinProduct.ASIN",
               "nativeQueryRef": "ASIN",
-              "active": true
-            },
+              "active": false
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
             {
               "field": {
-                "Column": {
+                "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "AsinProduct"
+                      "Entity": "bFriction"
                     }
                   },
-                  "Property": "价格($)"
+                  "Property": "Friction Avg Rating"
                 }
               },
-              "queryRef": "AsinProduct.价格($)",
-              "nativeQueryRef": "价格($)",
-              "active": true
+              "queryRef": "bFriction.Friction Avg Rating",
+              "nativeQueryRef": "Friction Avg Rating"
             }
           ]
         }
@@ -136,6 +139,25 @@
           "ExplainBy"
         ],
         "levels": [
+          {
+            "queryRefs": [
+              "AsinProduct.品牌"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AsinProduct"
+                    }
+                  },
+                  "Property": "品牌"
+                }
+              }
+            ],
+            "isPinned": true
+          },
           {
             "queryRefs": [
               "bFriction.Friction_Main"
@@ -176,25 +198,6 @@
           },
           {
             "queryRefs": [
-              "AsinProduct.品牌"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "AsinProduct"
-                    }
-                  },
-                  "Property": "品牌"
-                }
-              }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
               "AsinProduct.ASIN"
             ],
             "isCollapsed": true,
@@ -209,15 +212,7 @@
                   "Property": "ASIN"
                 }
               }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "AsinProduct.价格($)"
-            ],
-            "isCollapsed": true,
-            "isPinned": true
+            ]
           }
         ],
         "root": {
@@ -226,7 +221,7 @@
               "identityValues": [
                 {
                   "Literal": {
-                    "Value": "'Physical'"
+                    "Value": "'Bestqool'"
                   }
                 }
               ],
@@ -236,35 +231,11 @@
                   "identityValues": [
                     {
                       "Literal": {
-                        "Value": "'Wearing_Discomfort'"
+                        "Value": "'Physical'"
                       }
                     }
                   ],
-                  "isToggled": true,
-                  "children": [
-                    {
-                      "identityValues": [
-                        {
-                          "Literal": {
-                            "Value": "'SKG'"
-                          }
-                        }
-                      ],
-                      "isToggled": true,
-                      "children": [
-                        {
-                          "identityValues": [
-                            {
-                              "Literal": {
-                                "Value": "'B0DG4QKPFP'"
-                              }
-                            }
-                          ],
-                          "isToggled": true
-                        }
-                      ]
-                    }
-                  ]
+                  "isToggled": true
                 }
               ]
             }
