@@ -267,7 +267,3 @@ To reprocess reviews after fixing rules or data issues, update `MODEL_VERSION` t
 ## Project Goal
 
 Build a reusable VOC analytics framework that transforms large volumes of unstructured customer reviews into structured, business-oriented insights.
-
-## Git Revert Test
-
-This line will be reverted.
