@@ -251,6 +251,7 @@ To reprocess reviews after fixing rules or data issues, update `MODEL_VERSION` t
 - Multi-label bridge tables
 - Product-review dimensional model
 - Power BI semantic model with DAX-based analytical calculation layer
+- Interactive Power BI VOC dashboard
 - PBIP-based report and semantic model version control
 - Git-based version control
 
@@ -260,7 +261,7 @@ To reprocess reviews after fixing rules or data issues, update `MODEL_VERSION` t
 - Taxonomy refinement
 - Pipeline monitoring
 - Further performance optimization
-- Power BI dashboard expansion
+- Dashboard enhancement and analytical expansion
 
 ---
 
