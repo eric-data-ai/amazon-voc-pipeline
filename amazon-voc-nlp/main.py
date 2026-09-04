@@ -6,28 +6,26 @@ from classifier import classify_review, empty_feature, encode_reviews
 
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "amazon-voc-pipeline")
 DATASET = "voc_features"
-MODEL_VERSION = "nlp_v2.0_rule_v1"
+MODEL_VERSION = "nlp_v2.0_canonical_v1"
 
 
 def run_nlp():
     bq_client = bigquery.Client(project=PROJECT_ID)
 
-    # 查询未处理的评论（按 Review_ID 去重，移除 Review_Key）
+    # 查询未处理的评论（优先选择Content最完整的评论版本）
     query = f"""
-        SELECT
-            r.Review_ID,
-            ANY_VALUE(r.Clean_Text) AS Clean_Text,
-            ANY_VALUE(r.Rating) AS Rating
-        FROM `{PROJECT_ID}.voc_raw.review_raw` r
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM `{PROJECT_ID}.{DATASET}.review_processing` p
-            WHERE p.Review_ID = r.Review_ID
-              AND p.Processing_Status = 'SUCCESS'
-              AND p.Model_Version = '{MODEL_VERSION}'
-        )
-        AND r.Clean_Text IS NOT NULL
-        GROUP BY r.Review_ID
+    SELECT
+        v.Review_ID,
+        v.Clean_Text,
+        v.Rating
+    FROM `{PROJECT_ID}.voc_raw.vw_canonical_reviews` v
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM `{PROJECT_ID}.{DATASET}.review_processing` p
+        WHERE p.Review_ID = v.Review_ID
+          AND p.Processing_Status = 'SUCCESS'
+          AND p.Model_Version = '{MODEL_VERSION}'
+    )
     """
     df = bq_client.query(query).to_dataframe()
     if df.empty:

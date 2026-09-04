@@ -95,3 +95,45 @@ SELECT DISTINCT
     Review_ID,
     Review_Key
 FROM `amazon-voc-pipeline.voc_raw.review_raw`;
+
+
+-- Canonical review selection:
+-- A Review_ID may contain multiple raw records
+-- (e.g. title-only and title+content versions).
+-- Prefer the version with non-empty Content and longer text.
+-- Keep only one canonical record for NLP processing.
+CREATE OR REPLACE VIEW
+`amazon-voc-pipeline.voc_raw.vw_canonical_reviews`
+AS
+
+WITH canonical_reviews AS (
+
+    SELECT
+        Review_ID,
+        Clean_Text,
+        Rating,
+
+        ROW_NUMBER() OVER (
+            PARTITION BY Review_ID
+            ORDER BY
+                CASE
+                    WHEN COALESCE(Content, '') <> '' THEN 1
+                    ELSE 0
+                END DESC,
+                LENGTH(Content) DESC,
+                LENGTH(Clean_Text) DESC
+        ) AS rn
+
+    FROM `amazon-voc-pipeline.voc_raw.review_raw`
+
+    WHERE Clean_Text <> ''
+)
+
+SELECT
+    Review_ID,
+    Clean_Text,
+    Rating
+
+FROM canonical_reviews
+
+WHERE rn = 1;
