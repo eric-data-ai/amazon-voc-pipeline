@@ -1,0 +1,23 @@
+version: 2
+
+models:
+
+  - name: int_canonical_reviews
+
+    description: "Deduplicated canonical reviews for NLP processing"
+
+    columns:
+
+      - name: Review_ID
+        description: "Unique review identifier after canonical selection"
+        tests:
+          - not_null
+          - unique
+
+      - name: Clean_Text
+        description: "Cleaned review text used for NLP processing"
+        tests:
+          - not_null
+
+      - name: Rating
+        description: "Review star rating"

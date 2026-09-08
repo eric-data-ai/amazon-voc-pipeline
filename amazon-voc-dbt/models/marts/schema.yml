@@ -1,0 +1,37 @@
+version: 2
+
+models:
+
+  - name: dim_review
+
+    description: "Review dimension table combining canonical review records and NLP keyword features"
+
+    columns:
+
+      - name: Review_ID
+        description: "Unique review identifier"
+        tests:
+          - not_null
+          - unique
+
+
+      - name: Clean_Text
+        description: "Cleaned review text used for NLP analysis"
+        tests:
+          - not_null
+
+
+      - name: Rating
+        description: "Customer rating score"
+
+
+      - name: Helpful
+        description: "Number of helpful votes received by the review"
+
+
+      - name: Review_Date
+        description: "Original review submission date"
+
+
+      - name: Keywords
+        description: "Extracted NLP keywords used for Power BI word cloud visualization"

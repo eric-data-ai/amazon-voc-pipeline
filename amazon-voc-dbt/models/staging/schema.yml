@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_review
+
+    description: "Clean staging layer for Amazon review records"
+
+    columns:
+
+      - name: Review_ID
+        description: "Unique review identifier"
+        tests:
+          - not_null
+
+      - name: ASIN
+        description: "Amazon Standard Identification Number"
+        tests:
+          - not_null
