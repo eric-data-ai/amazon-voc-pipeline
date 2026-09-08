@@ -1,14 +1,29 @@
 -- =====================================================================
--- Amazon VOC Pipeline - BigQuery Feature Layer Schema
+-- Amazon VOC Pipeline - BigQuery NLP Output Layer Schema
 -- =====================================================================
--- This script creates the analytical feature tables used by the NLP
--- pipeline and the Power BI semantic model.
+-- This script creates the schema for NLP-generated output tables.
+--
+-- These tables are populated by the Python-based NLP pipeline and serve
+-- as upstream inputs for dbt transformation models.
+--
+-- dbt models transform these outputs into analytical dimensions and marts
+-- consumed by the Power BI semantic model.
+-- =====================================================================
+-- Note:
+--
+-- Tables created in this script represent the NLP Output Layer.
+--
+-- Analytical models such as dim_review and dim_asinreview
+-- are managed separately by dbt transformation models.
+
 -- =====================================================================
 
--- 1. Processing control table
--- Tracks the NLP processing status for each unique review.
--- Note: Review_Key has been removed from this table; Review_ID is the
--- primary business key at the NLP processing layer.
+-- 1. NLP processing control table
+-- Tracks NLP processing status and model version information
+-- for each review processed by the NLP pipeline.
+--
+-- Review_ID is the primary business key at the NLP layer.
+
 CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.review_processing` (
     Review_ID STRING NOT NULL,          -- Unique review identifier
     Model_Version STRING,               -- NLP model version used for processing
@@ -17,19 +32,22 @@ CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.review_processing` (
     Error_Message STRING                -- Error details if processing failed
 );
 
--- 2. NLP feature table
--- Stores review-level NLP features that are not multi-valued.
--- Currently contains Keywords used for word cloud analysis.
+-- 2. Review-level NLP feature table
+-- Stores single-valued NLP features generated from review text.
+-- Multi-valued classifications are stored separately
+-- in bridge tables.
+
 CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.review_features` (
     Review_ID STRING NOT NULL,          -- Unique review identifier
     Keywords STRING                     -- Semicolon-separated keywords extracted from the review
 );
 
--- 3. Bridge tables
--- Bridge tables handle multi-valued NLP dimensions to preserve
--- relationships and avoid Cartesian products.
+-- 3. NLP bridge tables
+-- Bridge tables store multi-valued NLP classifications.
+--
+-- They preserve review-level relationships and prevent
+-- Cartesian product issues in downstream analytical models.
 
--- Scene bridge table
 CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.scene_bridge` (
     Review_ID STRING,                   -- Review identifier
     Main_Scene STRING,                  -- Main scene category
@@ -67,73 +85,3 @@ CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.location_bridge` (
     Review_ID STRING,                   -- Review identifier
     Location STRING                     -- Location category extracted from the review
 );
-
--- 4. Dimension tables
--- Dimension tables are generated via SQL and provide review-centric
--- analytical structures for the Power BI semantic model.
-
--- Review dimension table (one row per review)
-CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.dim_review` AS
-SELECT
-    r.Review_ID,
-    ANY_VALUE(r.Clean_Text) AS Clean_Text,   -- Cleaned review text
-    ANY_VALUE(r.Rating) AS Rating,           -- Review rating
-    ANY_VALUE(r.Helpful_Votes) AS Helpful,   -- Number of helpful votes
-    ANY_VALUE(r.Review_Date) AS Review_Date, -- Review date
-    ANY_VALUE(f.Keywords) AS Keywords        -- Keywords from NLP feature table
-FROM `amazon-voc-pipeline.voc_raw.review_raw` r
-LEFT JOIN `amazon-voc-pipeline.voc_features.review_features` f
-    ON r.Review_ID = f.Review_ID
-GROUP BY r.Review_ID;
-
--- ASIN-review relationship table
--- Represents the association between products and reviews.
--- Designed to support many-to-many relationships in the semantic model.
-CREATE OR REPLACE TABLE `amazon-voc-pipeline.voc_features.dim_asinreview` AS
-SELECT DISTINCT
-    ASIN,
-    Review_ID,
-    Review_Key
-FROM `amazon-voc-pipeline.voc_raw.review_raw`;
-
-
--- Canonical review selection:
--- A Review_ID may contain multiple raw records
--- (e.g. title-only and title+content versions).
--- Prefer the version with non-empty Content and longer text.
--- Keep only one canonical record for NLP processing.
-CREATE OR REPLACE VIEW
-`amazon-voc-pipeline.voc_raw.vw_canonical_reviews`
-AS
-
-WITH canonical_reviews AS (
-
-    SELECT
-        Review_ID,
-        Clean_Text,
-        Rating,
-
-        ROW_NUMBER() OVER (
-            PARTITION BY Review_ID
-            ORDER BY
-                CASE
-                    WHEN COALESCE(Content, '') <> '' THEN 1
-                    ELSE 0
-                END DESC,
-                LENGTH(Content) DESC,
-                LENGTH(Clean_Text) DESC
-        ) AS rn
-
-    FROM `amazon-voc-pipeline.voc_raw.review_raw`
-
-    WHERE Clean_Text <> ''
-)
-
-SELECT
-    Review_ID,
-    Clean_Text,
-    Rating
-
-FROM canonical_reviews
-
-WHERE rn = 1;
