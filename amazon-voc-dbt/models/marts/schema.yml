@@ -35,3 +35,26 @@ models:
 
       - name: Keywords
         description: "Extracted NLP keywords used for Power BI word cloud visualization"
+
+
+  - name: dim_asinreview
+
+    description: "Bridge table representing ASIN and review relationships"
+
+    columns:
+
+      - name: ASIN
+        description: "Amazon product identifier"
+        tests:
+          - not_null
+
+      - name: Review_ID
+        description: "Unique review identifier"
+        tests:
+          - not_null
+
+      - name: Review_Key
+        description: "Composite key generated from ASIN and Review_ID"
+        tests:
+          - not_null
+          - unique
