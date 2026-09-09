@@ -270,7 +270,7 @@ The NLP pipeline is model-version aware and generates feature tables.
 
 Current model version:
 
-`nlp_v2.0_canonical_v1`
+`nlp_v2.0_canonical_v2`
 
 Reviews successfully processed under the current model version are skipped.
 
