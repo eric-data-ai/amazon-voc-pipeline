@@ -36,6 +36,11 @@ credentials.json
 .vscode/
 .idea/
 
+# dbt
+logs/
+target/
+dbt_packages/
+
 # OS
 .DS_Store
 Thumbs.db

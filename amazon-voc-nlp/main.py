@@ -6,7 +6,7 @@ from classifier import classify_review, empty_feature, encode_reviews
 
 PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT", "amazon-voc-pipeline")
 DATASET = "voc_features"
-MODEL_VERSION = "nlp_v2.0_canonical_v1"
+MODEL_VERSION = "nlp_v2.0_canonical_v2"
 
 
 def run_nlp():
@@ -15,14 +15,14 @@ def run_nlp():
     # 查询未处理的评论（优先选择Content最完整的评论版本）
     query = f"""
     SELECT
-        v.Review_ID,
-        v.Clean_Text,
-        v.Rating
-    FROM `{PROJECT_ID}.voc_raw.vw_canonical_reviews` v
+        r.Review_ID,
+        r.Clean_Text,
+        r.Rating
+    FROM `{PROJECT_ID}.voc_features.int_canonical_reviews` r
     WHERE NOT EXISTS (
         SELECT 1
         FROM `{PROJECT_ID}.{DATASET}.review_processing` p
-        WHERE p.Review_ID = v.Review_ID
+        WHERE p.Review_ID = r.Review_ID
           AND p.Processing_Status = 'SUCCESS'
           AND p.Model_Version = '{MODEL_VERSION}'
     )

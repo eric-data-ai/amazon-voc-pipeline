@@ -4,44 +4,56 @@
 
 基于云端的亚马逊客户之声（VOC）分析管道，将非结构化的亚马逊评论转化为结构化、面向业务的分析洞察。
 
-项目整合了数据工程、混合 NLP、BigQuery 维度建模以及 Power BI 语义层，构建端到端的分析管道。
+项目整合了数据工程、混合 NLP、基于 dbt 的分析工程、BigQuery 维度建模以及 Power BI 语义层，构建端到端的分析管道。
 
 ---
 
-## System Architecture
+## 系统架构
 
 ```mermaid
 flowchart TD
 
-A[Amazon Reviews<br/>ASIN-based Review Data<br/>ASIN Sources]
+A[亚马逊评论<br/>基于 ASIN 的评论数据]
 
-B[Google Cloud Storage<br/>Raw Data Landing Zone]
+B[Google Cloud Storage<br/>原始数据落地区]
 
-C[Cloud Run Job<br/>ETL Pipeline<br/>Cleaning & Transformation]
+C[Cloud Run Job<br/>ETL 管道<br/>清洗与标准化]
 
-D[BigQuery<br/>Raw Layer<br/>review_raw]
+D[BigQuery<br/>原始层<br/>review_raw]
 
-E[Cloud Run Job<br/>NLP Processing<br/>Hybrid NLP Engine]
+E[Cloud Run Job<br/>混合 NLP 引擎<br/>分类与特征提取]
 
-F[BigQuery<br/>Features Layer<br/>NLP Features<br/>Bridge Tables<br/>Dimension Tables]
+F[BigQuery<br/>NLP 特征层<br/>特征表<br/>桥接表]
 
-G[Power BI<br/>Semantic Model<br/>Star Schema & DAX Measures]
+G[dbt 转换层<br/>Staging 模型<br/>Intermediate 模型<br/>Marts 模型]
 
-H[VOC Analytics Dashboard<br/>Interactive Insights]
+H[BigQuery<br/>分析层<br/>dbt 模型<br/>维度与 Marts]
+
+I[Power BI<br/>语义模型<br/>星型模型与 DAX 度量]
+
+J[VOC 分析仪表板<br/>交互式洞察]
 
 
 A --> B
 B --> C
 C --> D
+
 D --> E
+D --> G
+
 E --> F
-F --> G
+
+F --> H
 G --> H
+
+H --> I
+I --> J
 
 
 style A fill:#f9f,stroke:#333,stroke-width:2px
 style E fill:#ffe6cc,stroke:#333,stroke-width:2px
-style H fill:#dfd,stroke:#333,stroke-width:2px
+style G fill:#cce5ff,stroke:#333,stroke-width:2px
+style J fill:#dfd,stroke:#333,stroke-width:2px
 ```
 
 ---
@@ -63,6 +75,8 @@ NLP 2.0 采用混合分类方法，结合确定性规则与语义相似度。
 
 分类结果保留决策信号，如 `Source`、`Score` 和 `Margin`。
 
+NLP 管道生成评论级特征和多标签桥接表，供下游分析模型和 BI 报表使用。
+
 ---
 
 ## 数据模型
@@ -73,22 +87,38 @@ NLP 2.0 采用混合分类方法，结合确定性规则与语义相似度。
 
 存储由 ETL 管道生成的标准化亚马逊评论数据。
 
-数据通过 `WRITE_APPEND` 增量加载，`Review_Key` 作为原始层的业务键。
+数据通过 `WRITE_APPEND` 增量加载，下游模型负责 canonical 评论选择和分析去重。
 
-### NLP 层
+### NLP 输出层
+
+`voc_features (Python 生成)`
 
 ```text
-voc_features
-├── review_processing
-├── review_features
-├── scene_bridge
-├── friction_bridge
-├── motivation_bridge
-├── time_bridge
-└── location_bridge
+review_processing
+review_features
+scene_bridge
+friction_bridge
+motivation_bridge
+time_bridge
+location_bridge
 ```
 
-使用独立的桥接表来处理多值 NLP 维度，以保留关系并避免笛卡尔积问题。
+这些表由 Python NLP 管道生成，存储分类结果、关键词和多值 NLP 标签。
+
+### dbt 转换层
+
+`voc_features (dbt 管理)`
+
+```text
+stg_review
+int_canonical_reviews
+dim_review
+dim_asinreview
+```
+
+dbt 模型构建在原始评论数据和 NLP 生成的特征表之上。
+
+dbt 将这些输入转换为干净、有文档、有测试的分析模型。
 
 ### 分析模型
 
@@ -142,7 +172,7 @@ BigQuery 作为分析数据仓库并提供维度表，而 Power BI 通过关系�
 - 跨多个分析维度的筛选上下文管理
 - 针对场景、摩擦、动机分析的动态度量
 
-跨维度分析的 DAX 示例：
+跨维度分析的 DAX 示例模式：
 
 ```dax
 Motivation Friction Reviews =
@@ -184,8 +214,11 @@ amazon-voc-pipeline/
 ├── amazon-voc-nlp/
 │   └── 混合 NLP 分类管道
 │
+├── amazon-voc-dbt/
+│   └── dbt 转换模型、测试和文档
+│
 ├── sql/
-│   └── BigQuery 特征层架构与数据建模脚本
+│   └── BigQuery DDL 脚本和模式定义
 │
 ├── PowerBI/
 │   └── 包含语义模型和报表定义的 Power BI PBIP 项目
@@ -200,9 +233,10 @@ amazon-voc-pipeline/
 
 - `amazon-voc-etl` — 数据摄取与标准化
 - `amazon-voc-nlp` — NLP 分类与特征生成
-- `sql` — BigQuery 特征层架构定义与分析数据建模脚本
+- `amazon-voc-dbt` — dbt 转换模型和测试
+- `sql` — BigQuery DDL 脚本和模式定义
 - `PowerBI` — 包含语义模型和报表定义的 Power BI PBIP 项目
-- `docs` — 项目文档、架构图和语义模型图
+- `docs` — 项目文档和架构图
 
 ---
 
@@ -211,6 +245,10 @@ amazon-voc-pipeline/
 ### 数据工程
 
 Python · pandas · openpyxl · PyArrow
+
+### 分析工程
+
+dbt · SQL · 数据建模
 
 ### NLP
 
@@ -228,15 +266,19 @@ Microsoft Power BI · Tabular 语义模型 · DAX · Power Query · TMDL · PBIP
 
 ## 处理策略
 
-NLP 管道具备模型版本感知能力。
+NLP 管道具备模型版本感知能力，并生成特征表。
 
 当前模型版本：
 
-`nlp_v2.0_rule_v1`
+`nlp_v2.0_canonical_v2`
 
-在当前模型版本下已处理的评论会被跳过，无论处理状态如何。这意味着成功或失败处理的评论都视为当前模型版本已完成。
+在当前模型版本下已成功处理的评论会被跳过。
+
+失败的评论仍可重新处理。
 
 若在修复规则或数据问题后需要重新处理评论，请将 `MODEL_VERSION` 更新为新值。这样既能保留处理历史，又能进行干净的重新处理。
+
+随后，dbt 将 NLP 特征表和原始数据转换为 Power BI 使用的最终分析模型。
 
 ---
 
@@ -246,12 +288,15 @@ NLP 管道具备模型版本感知能力。
 
 - 亚马逊评论摄取
 - 云端 ETL
-- BigQuery 原始层和特征层
+- BigQuery 原始层
+- 基于 dbt 的分析转换层
+- 基于 dbt 的数据质量测试
+- BigQuery 维度建模
 - 混合 NLP 2.0
 - 多标签桥接表
 - 产品-评论维度模型
 - 基于 DAX 分析计算层的 Power BI 语义模型
-- 交互式 Power BI VOC 分析仪表板
+- 交互式 Power BI VOC 仪表板
 - 基于 PBIP 的报表和语义模型版本控制
 - 基于 Git 的版本控制
 
@@ -261,10 +306,11 @@ NLP 管道具备模型版本感知能力。
 - 分类体系优化
 - 管道监控
 - 进一步性能优化
-- 仪表板增强与分析能力扩展
+- 仪表板增强和分析扩展
+- 扩展 dbt 数据质量测试和血缘文档
 
 ---
 
 ## 项目目标
 
-构建一个可复用的 VOC 分析框架，将大量非结构化客户评论转化为结构化、面向业务的洞察。
+构建一个可复用的 VOC 分析框架，将大量非结构化客户评论转化为结构化、经过测试且面向业务的洞察。
